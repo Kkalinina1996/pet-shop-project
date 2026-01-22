@@ -1,16 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import api from '../../api/axios'
+import { api } from '../../api/axios'
 
-export const fetchCategories = createAsyncThunk(
-  'categories/fetchCategories',
+export const fetchSaleProducts = createAsyncThunk(
+  'sale/fetchSaleProducts',
   async () => {
-    const response = await api.get('/categories/all')
+    const response = await api.get('/products/sale')
     return response.data
   }
 )
 
-const categoriesSlice = createSlice({
-  name: 'categories',
+const saleSlice = createSlice({
+  name: 'sale',
   initialState: {
     items: [],
     status: 'idle',
@@ -19,18 +19,18 @@ const categoriesSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchCategories.pending, state => {
+      .addCase(fetchSaleProducts.pending, state => {
         state.status = 'loading'
       })
-      .addCase(fetchCategories.fulfilled, (state, action) => {
+      .addCase(fetchSaleProducts.fulfilled, (state, action) => {
         state.status = 'succeeded'
         state.items = action.payload
       })
-      .addCase(fetchCategories.rejected, (state, action) => {
+      .addCase(fetchSaleProducts.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })
   }
 })
 
-export default categoriesSlice.reducer
+export default saleSlice.reducer
