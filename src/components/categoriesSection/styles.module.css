@@ -1,0 +1,55 @@
+.section {
+  width: 1360px;
+  margin: 80px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* верхняя строка */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 {
+  font-size: 64px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.allBtn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: 1px solid #dddddd;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* список карточек */
+.list {
+  display: flex;
+  gap: 32px;
+}
+
+/* карточка */
+.card {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card img {
+  width: 200px;
+  height: 200px;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.card p {
+  text-align: center;
+  font-size: 18px;
+  margin: 0;
+}

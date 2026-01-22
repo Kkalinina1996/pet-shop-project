@@ -1,0 +1,62 @@
+.section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 120px 0;
+}
+
+.container {
+  width: 1360px;
+  background: linear-gradient(135deg, #0d50ff, #2a6bff);
+  border-radius: 24px;
+  padding: 48px 64px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* заголовок */
+.title {
+  margin: 0;
+  font-size: 64px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* основной блок */
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 64px;
+}
+
+/* картинка */
+.image {
+  width: 640px;
+  object-fit: contain;
+}
+
+/* форма */
+.form {
+  width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* кнопка */
+.button {
+  height: 58px;
+  margin-top: 16px;
+
+  background-color: #ffffff !important;
+  color: #282828 !important;
+
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+
+  border-radius: 8px !important;
+}
