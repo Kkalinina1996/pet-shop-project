@@ -1,41 +1,78 @@
 .wrapper {
-  background: linear-gradient(90deg, #0d50ff, #1e3fdc);
-  border-radius: 12px;
-  padding: 40px;
+  max-width: 1360px;
+  margin: 120px auto;
+  padding: 40px 60px;
+
+  background: linear-gradient(90deg, #0d50ff 0%, #245bff 100%);
+  border-radius: 24px;
+
+  color: #ffffff;
+}
+
+/* заголовок */
+.title {
+  font-size: 64px;
+  font-weight: 700;
+  margin: 0 0 40px;
+}
+
+/* основной контент */
+.content {
   display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
   gap: 40px;
-  color: white;
 }
 
-.left {
-  flex: 1;
-}
-
-.left img {
+/* картинка */
+.image {
+  width: 600px;
   max-width: 100%;
+  object-fit: contain;
 }
 
+/* форма */
 .form {
-  flex: 1;
+  width: 520px;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
+/* инпуты */
 .form input {
-  padding: 16px;
-  border-radius: 6px;
-  border: 1px solid #fff;
+  height: 56px;
+  padding: 0 20px;
+
   background: transparent;
-  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+
+  color: #ffffff;
+  font-size: 16px;
 }
 
+.form input::placeholder {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* кнопка */
 .form button {
-  padding: 16px;
-  background: white;
+  margin-top: 16px;
+  height: 58px;
+
+  background: #ffffff;
   color: #0d50ff;
+
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
+
+  font-size: 18px;
   font-weight: 600;
   cursor: pointer;
+}
+
+/* hover — аккуратно */
+.form button:hover {
+  opacity: 0.9;
 }

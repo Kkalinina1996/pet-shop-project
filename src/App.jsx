@@ -5,7 +5,7 @@ import Footer from './components/footer'
 
 import Home from './pages/home'
 import Categories from './pages/categories'
-import Sale from './pages/sales'
+import Sales from './pages/sales'
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/categories" element={<Categories />} />
-        <Route path="/sales" element={<Sale />} />
+        <Route path="/sales" element={<Sales />} />
       </Routes>
 
       <Footer />
