@@ -1,84 +1,132 @@
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  addToCart,
-  decreaseCount,
-  removeFromCart
-} from '../../redux/slices/cartSlice'
-import styles from './styles.module.css'
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { removeFromCart, updateQuantity, clearCart } from '../../redux/slices/cartSlice';
+import styles from './styles.module.css';
 
-const Cart = () => {
-  const dispatch = useDispatch()
-  const items = useSelector(state => state.cart.items)
+function CartPage() {
+    const dispatch = useDispatch();
+    const cartItems = useSelector(state => state.cart.items);
 
-  const total = items.reduce((sum, item) => {
-    const price = item.discont_price ?? item.price
-    return sum + price * item.count
-  }, 0)
+    const handleRemove = (id) => {
+        dispatch(removeFromCart(id));
+    };
 
-  if (items.length === 0) {
-    return <h2 className={styles.empty}>Your cart is empty</h2>
-  }
+    const handleQuantityChange = (id, newQuantity) => {
+        if (newQuantity > 0) {
+            dispatch(updateQuantity({ id, quantity: newQuantity }));
+        }
+    };
 
-  return (
-    <section className={styles.section}>
-      <h1>Shopping cart</h1>
+    const handleClearCart = () => {
+        dispatch(clearCart());
+    };
 
-      <div className={styles.content}>
-        <div className={styles.list}>
-          {items.map(item => (
-            <div key={item.id} className={styles.item}>
-              <img
-                src={`http://localhost:3333${item.image}`}
-                alt={item.title}
-              />
 
-              <div>
-                <p>{item.title}</p>
+    const totalPrice = cartItems.reduce((sum, item) => {
+        const price = item.discont_price || item.price;
+        return sum + (price * item.quantity);
+    }, 0);
 
-                <div className={styles.counter}>
-                  <button
-                    onClick={() =>
-                      dispatch(decreaseCount(item.id))
-                    }
-                  >
-                    −
-                  </button>
-
-                  <span>{item.count}</span>
-
-                  <button
-                    onClick={() =>
-                      dispatch(addToCart(item))
-                    }
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              <div className={styles.price}>
-                ${(item.discont_price ?? item.price) *
-                  item.count}
-              </div>
-
-              <button
-                onClick={() =>
-                  dispatch(removeFromCart(item.id))
-                }
-              >
-                ✕
-              </button>
+    if (cartItems.length === 0) {
+        return (
+            <div className={styles.emptyCart}>
+                <h1>Shopping cart</h1>
+                <p>Looks like you have no items in your basket currently.</p>
+                <Link to="/products" className={styles.continueButton}>
+                    Continue Shopping
+                </Link>
             </div>
-          ))}
-        </div>
+        );
+    }
 
-        <div className={styles.summary}>
-          <h3>Order details</h3>
-          <p>Total: ${total.toFixed(2)}</p>
+    return (
+        <div className={styles.cartPage}>
+            <div className={styles.breadcrumbs}>
+                <Link to="/">Main page</Link>
+                <span> - </span>
+                <span>Shopping cart</span>
+            </div>
+
+            <div className={styles.header}>
+                <h1>Shopping cart</h1>
+                <button onClick={handleClearCart} className={styles.clearButton}>
+                    Clear cart
+                </button>
+            </div>
+
+            <div className={styles.cartContainer}>
+
+                <div className={styles.itemsList}>
+                    {cartItems.map(item => (
+                        <div key={item.id} className={styles.cartItem}>
+                            <img
+                                src={`https://pet-shop-backend-2l1c.onrender.com${item.image}`}
+                                alt={item.title}
+                            />
+
+                            <div className={styles.itemInfo}>
+                                <h3>{item.title}</h3>
+
+                                <div className={styles.itemControls}>
+                                    <div className={styles.quantityControl}>
+                                        <button onClick={() => handleQuantityChange(item.id, item.quantity - 1)}>
+                                            -
+                                        </button>
+                                        <span>{item.quantity}</span>
+                                        <button onClick={() => handleQuantityChange(item.id, item.quantity + 1)}>
+                                            +
+                                        </button>
+                                    </div>
+
+                                    <div className={styles.priceBlock}>
+                    <span className={styles.currentPrice}>
+                      ${(item.discont_price || item.price) * item.quantity}
+                    </span>
+                                        {item.discont_price && (
+                                            <span className={styles.oldPrice}>
+                        ${item.price * item.quantity}
+                      </span>
+                                        )}
+                                    </div>
+
+                                    <button
+                                        onClick={() => handleRemove(item.id)}
+                                        className={styles.removeButton}
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+
+                <div className={styles.orderSummary}>
+                    <h2>Order details</h2>
+
+                    <div className={styles.summaryRow}>
+                        <span>Items ({cartItems.length})</span>
+                        <span>${totalPrice.toFixed(2)}</span>
+                    </div>
+
+                    <div className={styles.totalRow}>
+                        <span>Total</span>
+                        <span>${totalPrice.toFixed(2)}</span>
+                    </div>
+
+                    <form className={styles.orderForm}>
+                        <input type="text" placeholder="Name" required />
+                        <input type="tel" placeholder="Phone number" required />
+                        <input type="email" placeholder="Email" required />
+                        <button type="submit" className={styles.orderButton}>
+                            Order
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
-    </section>
-  )
+    );
 }
 
-export default Cart
+export default CartPage;

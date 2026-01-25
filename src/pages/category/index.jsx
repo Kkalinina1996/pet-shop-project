@@ -1,86 +1,87 @@
-import { useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import ProductCard from '../../components/productCards'
-import api from '../../api/axios'
-import styles from './styles.module.css'
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import { addToCart } from '../../redux/slices/cartSlice';
+import styles from './styles.module.css';
 
-const Category = () => {
-  const { id } = useParams()
+function CategoryPage() {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const [products, setProducts] = useState([]);
+    const [categoryTitle, setCategoryTitle] = useState('');
 
-  const [category, setCategory] = useState(null)
-  const [products, setProducts] = useState([])
-  const [minPrice, setMinPrice] = useState('')
-  const [maxPrice, setMaxPrice] = useState('')
-  const [sort, setSort] = useState('default')
+    useEffect(() => {
+        axios.get(`https://pet-shop-backend-2l1c.onrender.com/categories/${id}`)
+            .then(response => {
+                setCategoryTitle(response.data.category.title);
+                setProducts(response.data.data);
+            })
+            .catch(error => {
+                console.log('Ошибка:', error);
+            });
+    }, [id]);
 
-  useEffect(() => {
-    const fetchCategory = async () => {
-      const res = await api.get(`/categories/${id}`)
-      setCategory(res.data.category)
-      setProducts(res.data.data)
-    }
+    const handleAddToCart = (product) => {
+        dispatch(addToCart(product));
+    };
 
-    fetchCategory()
-  }, [id])
+    return (
+        <div className={styles.categoryPage}>
+            <div className={styles.breadcrumbs}>
+                <Link to="/">Main page</Link>
+                <span> ... </span>
+                <Link to="/categories">Categories</Link>
+                <span> ... </span>
+                <span>{categoryTitle}</span>
+            </div>
 
-  const data = [...products]
-    .filter(p => {
-      const price = p.discount_price ?? p.price
-      if (minPrice && price < minPrice) return false
-      if (maxPrice && price > maxPrice) return false
-      return true
-    })
-    .sort((a, b) => {
-      const priceA = a.discount_price ?? a.price
-      const priceB = b.discount_price ?? b.price
+            <h1>{categoryTitle}</h1>
 
-      if (sort === 'low') return priceA - priceB
-      if (sort === 'high') return priceB - priceA
-      return 0
-    })
+            <div className={styles.productsGrid}>
+                {products.map(product => (
+                    <div key={product.id} className={styles.productCard}>
+                        <Link to={`/products/${product.id}`}>
+                            <img
+                                src={`https://pet-shop-backend-2l1c.onrender.com${product.image}`}
+                                alt={product.title}
+                            />
+                        </Link>
 
-  if (!category) return <p className={styles.loading}>Loading...</p>
+                        {product.discont_price && (
+                            <div className={styles.discount}>
+                                -{Math.round((1 - product.discont_price / product.price) * 100)}%
+                            </div>
+                        )}
 
-  return (
-    <section className={styles.section}>
-      <h1 className={styles.title}>{category.title}</h1>
+                        <div className={styles.productInfo}>
+                            <Link to={`/products/${product.id}`}>
+                                <h3>{product.title}</h3>
+                            </Link>
 
-      {/* FILTER BAR */}
-      <div className={styles.filters}>
-        <div className={styles.price}>
-          <span>Price</span>
-          <input
-            type="number"
-            placeholder="from"
-            value={minPrice}
-            onChange={e => setMinPrice(e.target.value)}
-          />
-          <input
-            type="number"
-            placeholder="to"
-            value={maxPrice}
-            onChange={e => setMaxPrice(e.target.value)}
-          />
+                            <div className={styles.priceRow}>
+                                <div className={styles.prices}>
+                  <span className={styles.currentPrice}>
+                    ${product.discont_price || product.price}
+                  </span>
+                                    {product.discont_price && (
+                                        <span className={styles.oldPrice}>${product.price}</span>
+                                    )}
+                                </div>
+
+                                <button
+                                    onClick={() => handleAddToCart(product)}
+                                    className={styles.addButton}
+                                >
+                                    Add to cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
-
-        <div className={styles.sort}>
-          <span>Sorted</span>
-          <select value={sort} onChange={e => setSort(e.target.value)}>
-            <option value="default">by default</option>
-            <option value="low">price: low-high</option>
-            <option value="high">price: high-low</option>
-          </select>
-        </div>
-      </div>
-
-      {/* PRODUCTS */}
-      <div className={styles.grid}>
-        {data.map(product => (
-  <ProductCard key={product.id} product={product} />
-))}
-      </div>
-    </section>
-  )
+    );
 }
 
-export default Category
+export default CategoryPage;

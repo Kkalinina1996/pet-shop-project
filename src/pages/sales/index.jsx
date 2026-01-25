@@ -1,41 +1,80 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchProducts } from '../../redux/slices/productsSlice'
-import ProductCard from '../../components/productCards'
-import styles from './styles.module.css'
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import { addToCart } from '../../redux/slices/cartSlice'
+import styles from './styles.module.css';
 
-const Sales = () => {
-  const dispatch = useDispatch()
-  const { items, status } = useSelector(state => state.products)
+function SalePage() {
+    const dispatch = useDispatch();
+    const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchProducts())
-    }
-  }, [dispatch, status])
+    useEffect(() => {
+        axios.get('https://pet-shop-backend-2l1c.onrender.com/products/all')
+            .then(response => {
+                // Фильтруем только товары со скидкой
+                const discountedProducts = response.data.filter(p => p.discont_price);
+                setProducts(discountedProducts);
+            })
+            .catch(error => {
+                console.log('Ошибка:', error);
+            });
+    }, []);
 
-  const sales = items.filter(
-    product => product.discont_price !== null
-  )
+    const handleAddToCart = (product) => {
+        dispatch(addToCart(product));
+    };
 
-  if (status === 'loading') {
-    return <p className={styles.loading}>Loading...</p>
-  }
+    return (
+        <div className={styles.salePage}>
+            <div className={styles.breadcrumbs}>
+                <Link to="/">Main page</Link>
+                <span> - </span>
+                <span>All sales</span>
+            </div>
 
-  return (
-    <section className={styles.section}>
-      <h1 className={styles.title}>All sales</h1>
+            <h1>Discounted items</h1>
 
-      <div className={styles.grid}>
-        {sales.map(product => (
-          <ProductCard
-            key={product.id}
-            product={product}
-          />
-        ))}
-      </div>
-    </section>
-  )
+            <div className={styles.productsGrid}>
+                {products.map(product => (
+                    <div key={product.id} className={styles.productCard}>
+                        <Link to={`/products/${product.id}`}>
+                            <img
+                                src={`https://pet-shop-backend-2l1c.onrender.com${product.image}`}
+                                alt={product.title}
+                            />
+                        </Link>
+
+                        <div className={styles.discount}>
+                            -{Math.round((1 - product.discont_price / product.price) * 100)}%
+                        </div>
+
+                        <div className={styles.productInfo}>
+                            <Link to={`/products/${product.id}`}>
+                                <h3>{product.title}</h3>
+                            </Link>
+
+                            <div className={styles.priceRow}>
+                                <div className={styles.prices}>
+                  <span className={styles.currentPrice}>
+                    ${product.discont_price}
+                  </span>
+                                    <span className={styles.oldPrice}>${product.price}</span>
+                                </div>
+
+                                <button
+                                    onClick={() => handleAddToCart(product)}
+                                    className={styles.addButton}
+                                >
+                                    Add to cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 }
 
-export default Sales
+export default SalePage;

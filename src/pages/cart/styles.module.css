@@ -1,118 +1,267 @@
-.section {
-  max-width: 1360px;
-  margin: 40px auto;
-  padding: 0 40px;
+.cartPage {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.title {
-  margin-bottom: 32px;
+.breadcrumbs {
+    margin-bottom: 20px;
+    color: #666;
 }
 
-.content {
-  display: flex;
-  gap: 40px;
+.breadcrumbs a {
+    color: #0066ff;
+    text-decoration: none;
 }
 
-.list {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+.breadcrumbs a:hover {
+    text-decoration: underline;
 }
 
-.item {
-  display: grid;
-  grid-template-columns: 120px 1fr auto auto;
-  gap: 24px;
-  align-items: center;
-  padding-bottom: 24px;
-  border-bottom: 1px solid #eee;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
 }
 
-.item img {
-  width: 120px;
-  height: 120px;
-  object-fit: contain;
+.header h1 {
+    font-size: 48px;
+    margin: 0;
 }
 
-.info {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.clearButton {
+    padding: 10px 20px;
+    background-color: transparent;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
 }
 
-.name {
-  font-size: 18px;
+.clearButton:hover {
+    background-color: #f5f5f5;
 }
 
-.counter {
-  display: flex;
-  gap: 12px;
-  align-items: center;
+.cartContainer {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
 }
 
-.counter button {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid #ccc;
-  background: #fff;
+/* Товары */
+.itemsList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.prices {
-  display: flex;
-  gap: 12px;
-  align-items: center;
+.cartItem {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 12px;
 }
 
-.current {
-  font-size: 20px;
-  font-weight: 600;
+.cartItem img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
-.old {
-  color: #8b8b8b;
-  text-decoration: line-through;
+.itemInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.remove {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
+.itemInfo h3 {
+    font-size: 20px;
+    margin: 0;
 }
 
-.summary {
-  flex: 1;
-  padding: 24px;
-  border: 1px solid #eee;
-  border-radius: 12px;
-  height: fit-content;
+.itemControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.total {
-  display: flex;
-  justify-content: space-between;
-  margin: 24px 0;
-  font-size: 20px;
+.quantityControl {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 5px;
 }
 
-.order {
-  width: 100%;
-  height: 56px;
-  background: #0d50ff;
-  color: #fff;
-  border-radius: 8px;
-  font-size: 16px;
+.quantityControl button {
+    width: 35px;
+    height: 35px;
+    border: none;
+    background-color: #f5f5f5;
+    border-radius: 6px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.empty {
-  text-align: center;
-  margin: 100px 0;
+.quantityControl button:hover {
+    background-color: #e0e0e0;
 }
 
-.back {
-  display: inline-block;
-  margin-top: 16px;
-  color: #0d50ff;
+.quantityControl span {
+    font-size: 20px;
+    font-weight: bold;
+    min-width: 30px;
+    text-align: center;
+}
+
+.priceBlock {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.currentPrice {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.oldPrice {
+    font-size: 20px;
+    color: #999;
+    text-decoration: line-through;
+}
+
+.removeButton {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background-color: #f5f5f5;
+    border-radius: 6px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.removeButton:hover {
+    background-color: #ffebee;
+    color: #f44336;
+}
+
+/* Итог заказа */
+.orderSummary {
+    background-color: #f5f5f5;
+    padding: 30px;
+    border-radius: 12px;
+    height: fit-content;
+}
+
+.orderSummary h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+    margin-top: 15px;
+    border-top: 1px solid #ddd;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.orderForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.orderForm input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.orderButton {
+    padding: 15px;
+    background-color: #0066ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.orderButton:hover {
+    background-color: #0052cc;
+}
+
+/* Пустая корзина */
+.emptyCart {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.emptyCart h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.emptyCart p {
+    font-size: 20px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.continueButton {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: #0066ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.continueButton:hover {
+    background-color: #0052cc;
+}
+
+@media (max-width: 768px) {
+    .cartContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .cartItem {
+        flex-direction: column;
+    }
+
+    .cartItem img {
+        width: 100%;
+        height: 200px;
+    }
+
+    .itemControls {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
 }

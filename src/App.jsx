@@ -11,6 +11,7 @@ import Product from './pages/product'
 import Sales from './pages/sales'
 import Cart from './pages/cart'
 import Checkout from './pages/checkout'
+import NotFoundPage from './pages/notFound'
 
 
 function App() {
@@ -31,8 +32,7 @@ function App() {
 
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
-
-        
+        <Route path='/*'element={<NotFoundPage />} />
       </Routes>
 
       <Footer />
