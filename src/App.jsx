@@ -9,7 +9,8 @@ import Products from './pages/products'
 import Sales from './pages/sales'
 import Product from './pages/product'
 import Cart from './pages/cart'
-//import Checkout from './pages/checkout'
+import Checkout from './pages/checkout'
+import Category from './pages/category'
 //import NotFound from './pages/notFound'
 
 function App() {
@@ -24,7 +25,8 @@ function App() {
         <Route path="/products/:id" element={<Product />} />
         <Route path="/sales" element={<Sales />} />
         <Route path="/cart" element={<Cart />} />
-        {/*<Route path="/checkout" element={<Checkout />} /> */}
+        <Route path="/checkout" element={<Checkout />} />
+         <Route path="/categories/:id" element={<Category />} />
         {/*<Route path="*" element={<NotFound />} /> */}
       </Routes>
 

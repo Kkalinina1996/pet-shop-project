@@ -1,0 +1,89 @@
+.card {
+  position: relative;
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  text-decoration: none;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+}
+
+.image {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  margin-bottom: 16px;
+}
+
+.discount {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #0D50FF;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.title {
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  min-height: 44px;
+}
+
+.prices {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.current {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.old {
+  font-size: 14px;
+  color: #8B8B8B;
+  text-decoration: line-through;
+}
+
+.imageWrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.addBtn {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+
+  padding: 12px 0;
+  background: #0D50FF;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+
+  opacity: 0;
+  transform: translateY(10px);
+  transition: 0.3s;
+}
+
+.card:hover .addBtn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card:hover .image {
+  opacity: 0.85;
+}
