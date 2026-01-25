@@ -1,67 +1,36 @@
 import { useState } from 'react'
+import api from '../../api/axios'
 import styles from './styles.module.css'
 import petsImage from '../../assets/images/discountPets.png'
 
 const DiscountForm = () => {
-  const [formData, setFormData] = useState({
+  const [form, setForm] = useState({
     name: '',
     phone: '',
     email: ''
   })
 
-  const handleChange = e => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+  const handleChange = e =>
+    setForm({ ...form, [e.target.name]: e.target.value })
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
-
-    console.log('Discount form data:', formData)
-
-    alert('Thank you! Your request has been sent.')
-
-    setFormData({
-      name: '',
-      phone: '',
-      email: ''
-    })
+    await api.post('/sale/send', form)
+    alert('Thank you!')
+    setForm({ name: '', phone: '', email: '' })
   }
 
   return (
-    <section className={styles.wrapper}>
-      <h2 className={styles.title}>5% off on the first order</h2>
+    <section className={styles.section}>
+      <h2>5% off on the first order</h2>
 
       <div className={styles.content}>
-        <img src={petsImage} alt="Pets" className={styles.image} />
+        <img src={petsImage} alt="Pets" />
 
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <input
-            name="name"
-            placeholder="Name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-
-          <input
-            name="phone"
-            placeholder="Phone number"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
-
-          <input
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-
+        <form onSubmit={handleSubmit}>
+          <input name="name" placeholder="Name" onChange={handleChange} />
+          <input name="phone" placeholder="Phone" onChange={handleChange} />
+          <input name="email" placeholder="Email" onChange={handleChange} />
           <button type="submit">Get a discount</button>
         </form>
       </div>

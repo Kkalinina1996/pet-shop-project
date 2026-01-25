@@ -1,0 +1,84 @@
+.section {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.card img {
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.name {
+  margin: 12px 0 8px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.prices {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.newPrice {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.oldPrice {
+  font-size: 16px;
+  color: #8b8b8b;
+  text-decoration: line-through;
+}
+
+.loading {
+  padding: 80px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.filters {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+  align-items: center;
+}
+
+.filters input[type='number'] {
+  width: 140px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+

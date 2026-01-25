@@ -1,78 +1,46 @@
-.wrapper {
+.section {
   max-width: 1360px;
-  margin: 120px auto;
-  padding: 40px 60px;
-
-  background: linear-gradient(90deg, #0d50ff 0%, #245bff 100%);
-  border-radius: 24px;
-
-  color: #ffffff;
+  margin: 0 auto 120px;
+  padding: 60px 40px;
+  background: #0d50ff;
+  border-radius: 20px;
+  color: #fff;
 }
 
-/* заголовок */
-.title {
-  font-size: 64px;
-  font-weight: 700;
-  margin: 0 0 40px;
+.section h2 {
+  font-size: 48px;
+  margin-bottom: 40px;
 }
 
-/* основной контент */
 .content {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
   gap: 40px;
 }
 
-/* картинка */
-.image {
-  width: 600px;
-  max-width: 100%;
-  object-fit: contain;
+.content img {
+  width: 500px;
 }
 
-/* форма */
-.form {
-  width: 520px;
+form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
+  width: 360px;
 }
 
-/* инпуты */
-.form input {
-  height: 56px;
-  padding: 0 20px;
-
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 8px;
-
-  color: #ffffff;
-  font-size: 16px;
-}
-
-.form input::placeholder {
-  color: rgba(255, 255, 255, 0.9);
-}
-
-/* кнопка */
-.form button {
-  margin-top: 16px;
+input {
   height: 58px;
+  border-radius: 8px;
+  border: none;
+  padding: 0 16px;
+}
 
-  background: #ffffff;
+button {
+  height: 58px;
+  background: #fff;
   color: #0d50ff;
-
   border: none;
   border-radius: 8px;
-
   font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* hover — аккуратно */
-.form button:hover {
-  opacity: 0.9;
 }

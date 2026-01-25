@@ -16,11 +16,11 @@ const SaleSection = () => {
     }
   }, [dispatch, status])
 
-  const saleItems = items
-    .filter(p => p.discount_price !== null)
-    .slice(0, 4)
+  if (status === 'loading') return <p>Loading...</p>
 
-  if (saleItems.length === 0) return null
+  const saleProducts = items
+    .filter(p => p.discont_price)
+    .slice(0, 4)
 
   return (
     <section className={styles.section}>
@@ -29,16 +29,27 @@ const SaleSection = () => {
         <Link to="/sales">All sales</Link>
       </div>
 
-      <div className={styles.list}>
-        {saleItems.map(product => (
-          <div key={product.id} className={styles.card}>
+      <div className={styles.grid}>
+        {saleProducts.map(product => (
+          <Link
+            key={product.id}
+            to={`/products/${product.id}`}
+            className={styles.card}
+          >
             <img
               src={`http://localhost:3333${product.image}`}
               alt={product.title}
             />
+
             <p>{product.title}</p>
-            <p>${product.discount_price}</p>
-          </div>
+
+            <div className={styles.prices}>
+              <span>${product.discont_price}</span>
+              <span className={styles.old}>
+                ${product.price}
+              </span>
+            </div>
+          </Link>
         ))}
       </div>
     </section>

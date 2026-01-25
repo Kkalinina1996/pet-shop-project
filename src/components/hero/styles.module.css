@@ -1,8 +1,7 @@
 .hero {
   position: relative;
-  width: 100%;
-  height: 600px; /* нормальная высота hero */
-  overflow: hidden;
+  height: 600px;
+  margin-bottom: 80px;
 }
 
 .image {
@@ -11,45 +10,35 @@
   object-fit: cover;
 }
 
-/* затемнение картинки */
-.dark {
+.overlay {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.35);
 }
 
-/* контейнер с текстом */
-.overlay {
+.content {
   position: absolute;
   top: 208px;
   left: 40px;
-
-  width: 1360px;
-  height: 310px;
-
+  max-width: 1360px;
   display: flex;
   flex-direction: column;
   gap: 40px;
-
-  color: #ffffff;
+  color: #fff;
 }
 
-.overlay h1 {
-  font-size: 96px;
+.content h1 {
+  font-size: 72px;
   font-weight: 700;
-  line-height: 110%;
-  margin: 0;
+  line-height: 1.1;
 }
 
-/* кнопка */
 .button {
   width: 218px;
   height: 58px;
-
-  padding: 16px 56px;
-  border-radius: 8px;
-
   background-color: #0d50ff !important;
-  text-transform: none !important;
+  border-radius: 8px !important;
+  padding: 16px 56px !important;
   font-size: 18px !important;
+  text-transform: none !important;
 }

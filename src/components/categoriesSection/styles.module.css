@@ -1,55 +1,39 @@
 .section {
-  width: 1360px;
-  margin: 80px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+  max-width: 1360px;
+  margin: 0 auto 80px;
+  padding: 0 40px;
 }
 
-/* верхняя строка */
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  margin-bottom: 40px;
 }
 
 .header h2 {
-  font-size: 64px;
-  font-weight: 700;
-  margin: 0;
+  font-size: 48px;
 }
 
-.allBtn {
-  padding: 10px 20px;
-  border-radius: 6px;
-  border: 1px solid #dddddd;
-  background: transparent;
-  cursor: pointer;
-}
-
-/* список карточек */
-.list {
-  display: flex;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 32px;
 }
 
-/* карточка */
 .card {
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  text-decoration: none;
+  color: #000;
+  text-align: center;
 }
 
 .card img {
-  width: 200px;
-  height: 200px;
-  border-radius: 16px;
+  width: 100%;
+  height: 260px;
   object-fit: cover;
+  border-radius: 12px;
 }
 
 .card p {
-  text-align: center;
+  margin-top: 16px;
   font-size: 18px;
-  margin: 0;
 }

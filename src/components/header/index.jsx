@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
-import logo from '../../assets/icons/logo.png'
-import basketIcon from '../../assets/icons/basketIcon.png'
 import styles from './styles.module.css'
+import logo from '../../assets/icons/logo.png'
+import cartIcon from '../../assets/icons/basketIcon.png'
 
 const Header = () => {
   return (
     <header className={styles.header}>
-      <Link to="/">
-        <img src={logo} alt="Logo" className={styles.logo} />
+      <Link to="/" className={styles.logo}>
+        <img src={logo} alt="Logo" />
       </Link>
 
       <nav className={styles.nav}>
@@ -17,8 +17,8 @@ const Header = () => {
         <Link to="/sales">All sales</Link>
       </nav>
 
-      <Link to="/cart">
-        <img src={basketIcon} alt="Cart" />
+      <Link to="/cart" className={styles.cart}>
+        <img src={cartIcon} alt="Cart" />
       </Link>
     </header>
   )

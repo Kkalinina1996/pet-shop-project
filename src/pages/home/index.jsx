@@ -1,7 +1,7 @@
 import Hero from '../../components/hero'
 import CategoriesSection from '../../components/categoriesSection'
-import DiscountForm from '../../components/discountForm'
 import SaleSection from '../../components/saleSection'
+import DiscountForm from '../../components/discountForm'
 
 const Home = () => {
   return (

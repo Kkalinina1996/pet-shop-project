@@ -4,8 +4,8 @@ import api from '../../api/axios'
 export const fetchCategories = createAsyncThunk(
   'categories/fetchCategories',
   async () => {
-    const response = await api.get('/categories/all')
-    return response.data
+    const res = await api.get('/categories/all')
+    return res.data
   }
 )
 
@@ -14,7 +14,7 @@ const categoriesSlice = createSlice({
   initialState: {
     items: [],
     status: 'idle',
-    error: null
+    error: null,
   },
   reducers: {},
   extraReducers: builder => {
@@ -30,7 +30,7 @@ const categoriesSlice = createSlice({
         state.status = 'failed'
         state.error = action.error.message
       })
-  }
+  },
 })
 
 export default categoriesSlice.reducer

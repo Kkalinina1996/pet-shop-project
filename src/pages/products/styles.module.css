@@ -1,0 +1,100 @@
+.section {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+/* CARD */
+.card {
+  text-decoration: none;
+  color: #000;
+}
+
+.card:hover .name {
+  text-decoration: underline;
+}
+
+/* IMAGE */
+.image {
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+  background-color: #f7f7f7;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+/* TITLE */
+.name {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+/* PRICES */
+.prices {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.newPrice {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.oldPrice {
+  font-size: 16px;
+  color: #8b8b8b;
+  text-decoration: line-through;
+}
+
+/* STATES */
+.loading {
+  padding: 100px;
+  text-align: center;
+  font-size: 24px;
+}
+
+.error {
+  padding: 100px;
+  text-align: center;
+  font-size: 20px;
+  color: red;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding: 20px;
+  }
+}

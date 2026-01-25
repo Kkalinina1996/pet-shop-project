@@ -1,0 +1,43 @@
+.hero {
+  position: relative;
+  width: 1440px;
+  height: 600px;
+  margin: 0 auto;
+}
+
+/* КАРТИНКА */
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* OVERLAY 40% */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+/* ТЕКСТ */
+.overlay {
+  position: absolute;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+
+  width: 1360px;
+}
+
+.overlay h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 96px;
+  line-height: 110%;
+  color: #ffffff;
+  margin: 0;
+}
