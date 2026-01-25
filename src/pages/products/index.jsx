@@ -14,7 +14,9 @@ const Products = () => {
     }
   }, [dispatch, status])
 
-  if (status === 'loading') return <p>Loading...</p>
+  if (status === 'loading') {
+    return <p className={styles.loading}>Loading...</p>
+  }
 
   return (
     <section className={styles.section}>
@@ -22,7 +24,10 @@ const Products = () => {
 
       <div className={styles.grid}>
         {items.map(product => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard
+            key={product.id}
+            product={product}
+          />
         ))}
       </div>
     </section>

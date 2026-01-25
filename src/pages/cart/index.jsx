@@ -1,65 +1,70 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { removeFromCart } from '../../redux/slices/cartSlice'
+import {
+  addToCart,
+  decreaseCount,
+  removeFromCart
+} from '../../redux/slices/cartSlice'
 import styles from './styles.module.css'
 
 const Cart = () => {
   const dispatch = useDispatch()
   const items = useSelector(state => state.cart.items)
 
-  const totalPrice = items.reduce(
-    (sum, item) =>
-      sum + (item.discont_price || item.price),
-    0
-  )
+  const total = items.reduce((sum, item) => {
+    const price = item.discont_price ?? item.price
+    return sum + price * item.count
+  }, 0)
 
   if (items.length === 0) {
-    return (
-      <section className={styles.empty}>
-        <h1>Cart is empty</h1>
-        <Link to="/products">Back to products</Link>
-      </section>
-    )
+    return <h2 className={styles.empty}>Your cart is empty</h2>
   }
 
   return (
     <section className={styles.section}>
-      <h1 className={styles.title}>Shopping cart</h1>
+      <h1>Shopping cart</h1>
 
-      <div className={styles.wrapper}>
-        {/* PRODUCTS */}
+      <div className={styles.content}>
         <div className={styles.list}>
           {items.map(item => (
-            <div key={item.id} className={styles.card}>
+            <div key={item.id} className={styles.item}>
               <img
                 src={`http://localhost:3333${item.image}`}
                 alt={item.title}
               />
 
-              <div className={styles.info}>
-                <p className={styles.name}>{item.title}</p>
+              <div>
+                <p>{item.title}</p>
 
-                <div className={styles.prices}>
-                  {item.discont_price ? (
-                    <>
-                      <span className={styles.newPrice}>
-                        ${item.discont_price}
-                      </span>
-                      <span className={styles.oldPrice}>
-                        ${item.price}
-                      </span>
-                    </>
-                  ) : (
-                    <span className={styles.newPrice}>
-                      ${item.price}
-                    </span>
-                  )}
+                <div className={styles.counter}>
+                  <button
+                    onClick={() =>
+                      dispatch(decreaseCount(item.id))
+                    }
+                  >
+                    −
+                  </button>
+
+                  <span>{item.count}</span>
+
+                  <button
+                    onClick={() =>
+                      dispatch(addToCart(item))
+                    }
+                  >
+                    +
+                  </button>
                 </div>
               </div>
 
+              <div className={styles.price}>
+                ${(item.discont_price ?? item.price) *
+                  item.count}
+              </div>
+
               <button
-                className={styles.remove}
-                onClick={() => dispatch(removeFromCart(item.id))}
+                onClick={() =>
+                  dispatch(removeFromCart(item.id))
+                }
               >
                 ✕
               </button>
@@ -67,14 +72,9 @@ const Cart = () => {
           ))}
         </div>
 
-        {/* SUMMARY */}
         <div className={styles.summary}>
-          <p>Total:</p>
-          <h2>${totalPrice}</h2>
-
-          <Link to="/checkout" className={styles.checkout}>
-            Checkout
-          </Link>
+          <h3>Order details</h3>
+          <p>Total: ${total.toFixed(2)}</p>
         </div>
       </div>
     </section>

@@ -4,7 +4,7 @@ import categoriesReducer from './slices/categoriesSlice'
 import cartReducer from './slices/cartSlice'
 import salesReducer from './slices/saleSlice'
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     products: productsReducer,
     categories: categoriesReducer,
@@ -12,3 +12,5 @@ export const store = configureStore({
     sales: salesReducer
   }
 })
+
+export default store

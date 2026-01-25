@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { addToCart } from '../../redux/slices/cartSlice'
 import styles from './styles.module.css'
@@ -6,53 +5,57 @@ import styles from './styles.module.css'
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch()
 
-  const { id, title, image, price, discount_price } = product
+  const {
+    title,
+    image,
+    price,
+    discont_price,
+    //description
+  } = product
 
-  const discount =
-    discount_price
-      ? Math.round(((price - discount_price) / price) * 100)
-      : null
-
-  const handleAdd = e => {
-    e.preventDefault() // ❗ чтобы не переходило на страницу товара
-    dispatch(addToCart(product))
-  }
+  const hasDiscount = discont_price !== null
+  const discountPercent = hasDiscount
+    ? Math.round(((price - discont_price) / price) * 100)
+    : null
 
   return (
-    <Link to={`/products/${id}`} className={styles.card}>
-      {discount && (
-        <div className={styles.discount}>-{discount}%</div>
+    <div className={styles.card}>
+      {hasDiscount && (
+        <span className={styles.badge}>
+          -{discountPercent}%
+        </span>
       )}
 
-      <div className={styles.imageWrapper}>
-        <img
-          className={styles.image}
-          src={`http://localhost:3333${image}`}
-          alt={title}
-        />
+      <img
+        src={`http://localhost:3333${image}`}
+        alt={title}
+      />
 
-        <button
-          className={styles.addBtn}
-          onClick={handleAdd}
-        >
-          Add to cart
-        </button>
-      </div>
-
-      <p className={styles.title}>{title}</p>
+      <h3 className={styles.title}>{title}</h3>
 
       <div className={styles.prices}>
         <span className={styles.current}>
-          ${discount_price ?? price}
+          ${hasDiscount ? discont_price : price}
         </span>
 
-        {discount_price && (
-          <span className={styles.old}>
-            ${price}
-          </span>
+        {hasDiscount && (
+          <span className={styles.old}>${price}</span>
         )}
       </div>
-    </Link>
+
+      <button
+        className={styles.btn}
+        onClick={() => dispatch(addToCart(product))}
+      >
+        Add to cart
+      </button>
+      {/*<div className={styles.description}>
+        <h3>Description</h3>
+        <p>{description}</p>*/}
+
+      </div>
+    //</div>
+
   )
 }
 

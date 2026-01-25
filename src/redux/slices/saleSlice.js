@@ -14,7 +14,7 @@ export const fetchSaleProducts = createAsyncThunk(
 
     // оставляем только товары со скидкой
     return response.data.filter(
-      product => product.discount_price !== null
+      product => product.discont_price !== null
     )
   }
 )

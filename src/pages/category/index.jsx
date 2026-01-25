@@ -23,7 +23,7 @@ const Category = () => {
     fetchCategory()
   }, [id])
 
-  const filteredProducts = [...products]
+  const data = [...products]
     .filter(p => {
       const price = p.discount_price ?? p.price
       if (minPrice && price < minPrice) return false
@@ -75,9 +75,9 @@ const Category = () => {
 
       {/* PRODUCTS */}
       <div className={styles.grid}>
-        {filteredProducts.map(product => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {data.map(product => (
+  <ProductCard key={product.id} product={product} />
+))}
       </div>
     </section>
   )

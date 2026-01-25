@@ -1,12 +1,11 @@
 .section {
   max-width: 600px;
-  margin: 0 auto;
-  padding: 60px 40px;
+  margin: 80px auto;
+  padding: 0 20px;
 }
 
 .title {
-  font-size: 40px;
-  font-weight: 700;
+  text-align: center;
   margin-bottom: 32px;
 }
 
@@ -19,23 +18,25 @@
 .form input {
   height: 56px;
   padding: 0 16px;
-  font-size: 16px;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid #ccc;
+  font-size: 16px;
 }
 
 .form button {
   height: 56px;
   background: #0d50ff;
   color: #fff;
-  font-size: 18px;
-  border: none;
-  border-radius: 6px;
+  border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
+}
+
+.form button:hover {
+  background: #0b45db;
 }
 
 .empty {
   text-align: center;
-  padding: 80px;
-  font-size: 20px;
+  margin: 100px 0;
 }

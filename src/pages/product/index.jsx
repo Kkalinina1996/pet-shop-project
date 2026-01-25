@@ -1,73 +1,87 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { fetchProducts } from '../../redux/slices/productsSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  fetchProductById,
+  clearCurrentProduct
+} from '../../redux/slices/productsSlice'
 import { addToCart } from '../../redux/slices/cartSlice'
 import styles from './styles.module.css'
 
-const ProductPage = () => {
+const Product = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
 
-  const { items = [], status } = useSelector(
-    state => state.products || {}
+  const product = useSelector(
+    state => state.products.currentProduct
   )
 
   useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchProducts())
-    }
-  }, [dispatch, status])
+    dispatch(fetchProductById(id))
+    return () => dispatch(clearCurrentProduct())
+  }, [dispatch, id])
 
-  const product = items.find(p => p.id === Number(id))
+  if (!product) return null
 
-  if (status === 'loading') return <p className={styles.loading}>Loading...</p>
-  if (!product) return <p className={styles.loading}>Product not found</p>
+  const {
+    title,
+    image,
+    price,
+    discont_price,
+    description
+  } = product
+
+  const hasDiscount = discont_price !== null
+  const discountPercent = hasDiscount
+    ? Math.round(((price - discont_price) / price) * 100)
+    : null
 
   return (
-    <section className={styles.section}>
-      <div className={styles.wrapper}>
-        <img
-          src={`http://localhost:3333${product.image}`}
-          alt={product.title}
-          className={styles.image}
-        />
+    <section className={styles.page}>
+      <div className={styles.content}>
+        {/* LEFT */}
+        <div className={styles.images}>
+          <img
+            src={`http://localhost:3333${image}`}
+            alt={title}
+          />
+        </div>
 
+        {/* RIGHT */}
         <div className={styles.info}>
-          <h1 className={styles.title}>{product.title}</h1>
+          <h1>{title}</h1>
 
-          <div className={styles.prices}>
-            {product.discont_price ? (
+          <div className={styles.priceRow}>
+            <span className={styles.price}>
+              ${hasDiscount ? discont_price : price}
+            </span>
+
+            {hasDiscount && (
               <>
-                <span className={styles.newPrice}>
-                  ${product.discont_price}
-                </span>
-                <span className={styles.oldPrice}>
-                  ${product.price}
+                <span className={styles.old}>${price}</span>
+                <span className={styles.badge}>
+                  -{discountPercent}%
                 </span>
               </>
-            ) : (
-              <span className={styles.newPrice}>
-                ${product.price}
-              </span>
             )}
           </div>
 
-          <button
-            className={styles.button}
-            onClick={() => dispatch(addToCart(product))}
-          >
-            Add to cart
-          </button>
+          <div className={styles.actions}>
+            <button
+              onClick={() => dispatch(addToCart(product))}
+            >
+              Add to cart
+            </button>
+          </div>
 
-          <p className={styles.description}>
-            High quality product for your pet. Safe materials,
-            modern design and long-lasting comfort.
-          </p>
+          <div className={styles.description}>
+            <h3>Description</h3>
+            <p>{description}</p>
+          </div>
         </div>
       </div>
     </section>
   )
 }
 
-export default ProductPage
+export default Product

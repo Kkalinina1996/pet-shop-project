@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearCart } from '../../redux/slices/cartSlice'
-import api from '../../api/axios'
 import styles from './styles.module.css'
 
 const Checkout = () => {
@@ -14,51 +13,66 @@ const Checkout = () => {
     email: ''
   })
 
-  const total = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  )
+  const handleChange = e => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
 
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault()
 
-    await api.post('/sale/send', {
-      ...form,
-      items,
-      total
-    })
+    if (!form.name || !form.phone || !form.email) {
+      alert('Please fill all fields')
+      return
+    }
 
-    alert('Order sent!')
     dispatch(clearCart())
+    alert('Order placed successfully!')
+  }
+
+  if (items.length === 0) {
+    return (
+      <section className={styles.empty}>
+        <h2>Your cart is empty</h2>
+      </section>
+    )
   }
 
   return (
     <section className={styles.section}>
-      <h1>Checkout</h1>
+      <h1 className={styles.title}>Checkout</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit}
+      >
         <input
+          type="text"
+          name="name"
           placeholder="Name"
-          onChange={e =>
-            setForm({ ...form, name: e.target.value })
-          }
-        />
-        <input
-          placeholder="Phone"
-          onChange={e =>
-            setForm({ ...form, phone: e.target.value })
-          }
-        />
-        <input
-          placeholder="Email"
-          onChange={e =>
-            setForm({ ...form, email: e.target.value })
-          }
+          value={form.name}
+          onChange={handleChange}
         />
 
-        <button type="submit">
-          Place order (${total})
-        </button>
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone number"
+          value={form.phone}
+          onChange={handleChange}
+        />
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={handleChange}
+        />
+
+        <button type="submit">Order</button>
       </form>
     </section>
   )
