@@ -2,8 +2,6 @@ import { Routes, Route } from 'react-router-dom'
 
 import Header from './components/header'
 import Footer from './components/footer'
-
-import MainPage from './pages/home'
 import CategoriesPage from './pages/categories'
 import CategoryPage from './pages/category'
 import ProductsPage from './pages/products'
@@ -12,15 +10,20 @@ import SalesPage from './pages/sales'
 import CartPage from './pages/cart'
 
 import NotFound from './pages/notFound'
+import Hero from './components/hero'
+
 
 function App() {
   return (
     <div className="app">
       <Header />
 
-      <main style={{ minHeight: '70vh', padding: '20px' }}>
+      
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          
+
+<Route path="/" element={<Hero />} />
+
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/categories/:id" element={<CategoryPage />} />
           <Route path="/products" element={<ProductsPage />} />
@@ -30,7 +33,7 @@ function App() {
           
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </main>
+     
 
       <Footer />
     </div>
