@@ -3,40 +3,37 @@ import { Routes, Route } from 'react-router-dom'
 import Header from './components/header'
 import Footer from './components/footer'
 
-import Home from './pages/home'
-import Categories from './pages/categories'
-import Category from './pages/category'
-import Products from './pages/products'
-import Product from './pages/product'
-import Sales from './pages/sales'
-import Cart from './pages/cart'
-import Checkout from './pages/checkout'
-import NotFoundPage from './pages/notFound'
+import MainPage from './pages/home'
+import CategoriesPage from './pages/categories'
+import CategoryPage from './pages/category'
+import ProductsPage from './pages/products'
+import ProductPage from './pages/product'
+import SalesPage from './pages/sales'
+import CartPage from './pages/cart'
 
+import NotFound from './pages/notFound'
 
 function App() {
   return (
-    <>
+    <div className="app">
       <Header />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/categories/:id" element={<Category />} />
-
-        <Route path="/products" element={<Products />} />
-        <Route path="/products/:id" element={<Product />} />
-
-        <Route path="/sales" element={<Sales />} />
-
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path='/*'element={<NotFoundPage />} />
-      </Routes>
+      <main style={{ minHeight: '70vh', padding: '20px' }}>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/categories/:id" element={<CategoryPage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/:id" element={<ProductPage />} />
+          <Route path="/sales" element={<SalesPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
 
       <Footer />
-    </>
+    </div>
   )
 }
 

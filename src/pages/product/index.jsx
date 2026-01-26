@@ -1,79 +1,106 @@
-import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import axios from 'axios'
 import { addToCart } from '../../redux/slices/cartSlice'
-import {
-  fetchProductById,
-  clearCurrentProduct
-} from '../../redux/slices/productsSlice'
 import styles from './styles.module.css'
 
-const Product = () => {
+function ProductPage() {
   const { id } = useParams()
   const dispatch = useDispatch()
 
-  const { currentProduct, status } = useSelector(
-    state => state.products
-  )
+  const [product, setProduct] = useState(null)
+  const [quantity, setQuantity] = useState(1)
 
   useEffect(() => {
-    dispatch(fetchProductById(id))
+    axios
+      .get(`http://localhost:3333/products/${id}`)
+      .then(response => {
+        const data = response.data
+        setProduct(Array.isArray(data) ? data[0] : data)
+      })
+      .catch(err => console.error(err))
+  }, [id])
 
-    return () => {
-      dispatch(clearCurrentProduct())
-    }
-  }, [id, dispatch])
-
-  if (status === 'loading' || !currentProduct) {
-    return <p>Loading...</p>
+  if (!product) {
+    return <p className={styles.loading}>Loading...</p>
   }
 
-  const {
-    title,
-    image,
-    price,
-    discont_price,
-    description
-  } = currentProduct
-
-  const hasDiscount = discont_price !== null
+  const handleAddToCart = () => {
+    dispatch(addToCart({ ...product, quantity }))
+  }
 
   return (
-    <section className={styles.page}>
-      <div className={styles.left}>
-        <img
-          src={`http://localhost:3333${image}`}
-          alt={title}
-        />
+    <div className={styles.productPage}>
+      {/* breadcrumbs */}
+      <div className={styles.breadcrumbs}>
+        <Link to="/">Main page</Link>
+        <span> / </span>
+        <Link to="/categories">Categories</Link>
+        <span> / </span>
+        <span>{product.title}</span>
       </div>
 
-      <div className={styles.right}>
-        <h1>{title}</h1>
+      <div className={styles.productContainer}>
+        {/* image */}
+        <div className={styles.imageSection}>
+          <img
+            src={`http://localhost:3333${product.image}`}
+            alt={product.title}
+          />
 
-        <div className={styles.prices}>
-          <span className={styles.current}>
-            ${hasDiscount ? discont_price : price}
-          </span>
-
-          {hasDiscount && (
-            <span className={styles.old}>${price}</span>
+          {product.discont_price && (
+            <div className={styles.discount}>
+              -
+              {Math.round(
+                (1 -
+                  product.discont_price / product.price) *
+                  100
+              )}
+              %
+            </div>
           )}
         </div>
 
-        <button
-          className={styles.btn}
-          onClick={() => dispatch(addToCart(currentProduct))}
-        >
-          Add to cart
-        </button>
+        {/* info */}
+        <div className={styles.infoSection}>
+          <h1>{product.title}</h1>
 
-        <div className={styles.description}>
-          <h3>Description</h3>
-          <p>{description}</p>
+          <div className={styles.priceBlock}>
+            <span className={styles.currentPrice}>
+              ${product.discont_price || product.price}
+            </span>
+
+            {product.discont_price && (
+              <span className={styles.oldPrice}>
+                ${product.price}
+              </span>
+            )}
+          </div>
+
+          <div className={styles.addToCartBlock}>
+            <div className={styles.quantityControl}>
+              <button onClick={() => setQuantity(q => Math.max(1, q - 1))}>−</button>
+              <span>{quantity}</span>
+              <button onClick={() => setQuantity(q => q + 1)}>+</button>
+            </div>
+
+            <button
+              className={styles.addButton}
+              onClick={handleAddToCart}
+            >
+              Add to cart
+            </button>
+          </div>
+
+          <div className={styles.description}>
+            <h3>Description</h3>
+            <p>{product.description}</p>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
 
-export default Product
+export default ProductPage

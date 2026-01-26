@@ -265,3 +265,46 @@
         gap: 15px;
     }
 }
+
+/* ===== MODAL ===== */
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 424px;
+  background: #0d50ff;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
+}
+
+.modal h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.modal p {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+}

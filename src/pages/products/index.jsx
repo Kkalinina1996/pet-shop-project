@@ -1,65 +1,73 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
-import { addToCart } from '../../redux/slices/cartSlice';
-import styles from './styles.module.css';
+import { useEffect, useState, useMemo } from 'react'
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import axios from 'axios'
+import { addToCart } from '../../redux/slices/cartSlice'
+import styles from './styles.module.css'
 
 function ProductsPage() {
-    const dispatch = useDispatch();
-    const [products, setProducts] = useState([]);
-    const [filteredProducts, setFilteredProducts] = useState([]);
-    const [priceFrom, setPriceFrom] = useState('');
-    const [priceTo, setPriceTo] = useState('');
-    const [sortBy, setSortBy] = useState('default');
-    const [showDiscounted, setShowDiscounted] = useState(false);
+    const dispatch = useDispatch()
 
+    const [products, setProducts] = useState([])
+    const [priceFrom, setPriceFrom] = useState('')
+    const [priceTo, setPriceTo] = useState('')
+    const [sortBy, setSortBy] = useState('default')
+    const [showDiscounted, setShowDiscounted] = useState(false)
 
+    // 🔹 Загружаем ВСЕ товары
     useEffect(() => {
-        axios.get('https://pet-shop-backend-2l1c.onrender.com/products/all')
+        axios
+            .get('http://localhost:3333/products/all')
             .then(response => {
-                setProducts(response.data);
-                setFilteredProducts(response.data);
+                setProducts(response.data)
             })
             .catch(error => {
-                console.log('Ошибка:', error);
-            });
-    }, []);
+                console.log('Ошибка:', error)
+            })
+    }, [])
 
-
-    useEffect(() => {
-        const result = products
+    // 🔹 Фильтрация и сортировка (без useEffect ❌)
+    const filteredProducts = useMemo(() => {
+        return products
             .filter(p => !showDiscounted || p.discont_price)
-            .filter(p => !priceFrom || (p.discont_price || p.price) >= Number(priceFrom))
-            .filter(p => !priceTo || (p.discont_price || p.price) <= Number(priceTo))
+            .filter(
+                p =>
+                    !priceFrom ||
+                    (p.discont_price || p.price) >= Number(priceFrom)
+            )
+            .filter(
+                p =>
+                    !priceTo ||
+                    (p.discont_price || p.price) <= Number(priceTo)
+            )
             .sort((a, b) => {
-                const priceA = a.discont_price || a.price;
-                const priceB = b.discont_price || b.price;
+                const priceA = a.discont_price || a.price
+                const priceB = b.discont_price || b.price
 
-                return sortBy === 'price-asc' ? priceA - priceB
-                    : sortBy === 'price-desc' ? priceB - priceA
-                        : sortBy === 'title' ? a.title.localeCompare(b.title)
-                            : 0;
-            });
+                if (sortBy === 'price-asc') return priceA - priceB
+                if (sortBy === 'price-desc') return priceB - priceA
+                if (sortBy === 'title')
+                    return a.title.localeCompare(b.title)
+                return 0
+            })
+    }, [products, priceFrom, priceTo, sortBy, showDiscounted])
 
-        setFilteredProducts(result);
-    }, [products, priceFrom, priceTo, sortBy, showDiscounted]);
-
-    const handleAddToCart = (product) => {
-        dispatch(addToCart(product));
-    };
+    const handleAddToCart = product => {
+        dispatch(addToCart(product))
+    }
 
     return (
         <div className={styles.productsPage}>
+            {/* Breadcrumbs */}
             <div className={styles.breadcrumbs}>
                 <Link to="/">Main page</Link>
-                <span> ... </span>
+                <span> / </span>
                 <span>All products</span>
             </div>
 
             <h1>All products</h1>
 
-
+            {/* Filters */}
             <div className={styles.filters}>
                 <div className={styles.priceFilter}>
                     <label>Price</label>
@@ -67,13 +75,13 @@ function ProductsPage() {
                         type="number"
                         placeholder="from"
                         value={priceFrom}
-                        onChange={(e) => setPriceFrom(e.target.value)}
+                        onChange={e => setPriceFrom(e.target.value)}
                     />
                     <input
                         type="number"
                         placeholder="to"
                         value={priceTo}
-                        onChange={(e) => setPriceTo(e.target.value)}
+                        onChange={e => setPriceTo(e.target.value)}
                     />
                 </div>
 
@@ -82,7 +90,9 @@ function ProductsPage() {
                         <input
                             type="checkbox"
                             checked={showDiscounted}
-                            onChange={(e) => setShowDiscounted(e.target.checked)}
+                            onChange={e =>
+                                setShowDiscounted(e.target.checked)
+                            }
                         />
                         Discounted items
                     </label>
@@ -90,28 +100,46 @@ function ProductsPage() {
 
                 <div className={styles.sortFilter}>
                     <label>Sorted</label>
-                    <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                    <select
+                        value={sortBy}
+                        onChange={e => setSortBy(e.target.value)}
+                    >
                         <option value="default">by default</option>
                         <option value="title">by title</option>
-                        <option value="price-asc">by price: low to high</option>
-                        <option value="price-desc">by price: high to low</option>
+                        <option value="price-asc">
+                            by price: low to high
+                        </option>
+                        <option value="price-desc">
+                            by price: high to low
+                        </option>
                     </select>
                 </div>
             </div>
 
+            {/* Products grid */}
             <div className={styles.productsGrid}>
                 {filteredProducts.map(product => (
-                    <div key={product.id} className={styles.productCard}>
+                    <div
+                        key={product.id}
+                        className={styles.productCard}
+                    >
                         <Link to={`/products/${product.id}`}>
                             <img
-                                src={`https://pet-shop-backend-2l1c.onrender.com${product.image}`}
+                                src={`http://localhost:3333${product.image}`}
                                 alt={product.title}
                             />
                         </Link>
 
                         {product.discont_price && (
                             <div className={styles.discount}>
-                                -{Math.round((1 - product.discont_price / product.price) * 100)}%
+                                -
+                                {Math.round(
+                                    (1 -
+                                        product.discont_price /
+                                        product.price) *
+                                    100
+                                )}
+                                %
                             </div>
                         )}
 
@@ -123,15 +151,22 @@ function ProductsPage() {
                             <div className={styles.priceRow}>
                                 <div className={styles.prices}>
                                     <span className={styles.currentPrice}>
-                                        ${product.discont_price || product.price}
+                                        $
+                                        {product.discont_price ||
+                                            product.price}
                                     </span>
+
                                     {product.discont_price && (
-                                        <span className={styles.oldPrice}>${product.price}</span>
+                                        <span className={styles.oldPrice}>
+                                            ${product.price}
+                                        </span>
                                     )}
                                 </div>
 
                                 <button
-                                    onClick={() => handleAddToCart(product)}
+                                    onClick={() =>
+                                        handleAddToCart(product)
+                                    }
                                     className={styles.addButton}
                                 >
                                     Add to cart
@@ -143,10 +178,12 @@ function ProductsPage() {
             </div>
 
             {filteredProducts.length === 0 && (
-                <p className={styles.noProducts}>No products found</p>
+                <p className={styles.noProducts}>
+                    No products found
+                </p>
             )}
         </div>
-    );
+    )
 }
 
-export default ProductsPage;
+export default ProductsPage
