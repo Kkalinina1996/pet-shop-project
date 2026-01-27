@@ -13,20 +13,24 @@ function Category() {
   const [categoryTitle, setCategoryTitle] = useState('')
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3333/categories/${id}`)
+    // 1️⃣ Получаем ВСЕ продукты
+    axios.get('http://localhost:3333/products/all')
       .then(res => {
-        setProducts(res.data)
-        if (res.data.length > 0) {
-          setCategoryTitle(res.data[0].category)
-        }
+        const filtered = res.data.filter(
+          product => product.categoryId === Number(id)
+        )
+        setProducts(filtered)
       })
-      .catch(err => console.log(err))
-  }, [id])
 
-  const handleAddToCart = product => {
-    dispatch(addToCart(product))
-  }
+    // 2️⃣ Получаем название категории
+    axios.get('http://localhost:3333/categories/all')
+      .then(res => {
+        const category = res.data.find(
+          cat => cat.id === Number(id)
+        )
+        setCategoryTitle(category?.title || '')
+      })
+  }, [id])
 
   return (
     <div className={styles.categoryPage}>
@@ -42,58 +46,65 @@ function Category() {
 
       <h1>{categoryTitle}</h1>
 
-      <div className={styles.productsGrid}>
-        {products.map(product => (
-          <div key={product.id} className={styles.productCard}>
+      {products.length === 0 ? (
+        <p>No products found</p>
+      ) : (
+        <div className={styles.productsGrid}>
+          {products.map(product => (
+            <div key={product.id} className={styles.productCard}>
 
-            <Link to={`/products/${product.id}`}>
-              <div className={styles.imageWrap}>
-                <img
-                  src={`http://localhost:3333${product.image}`}
-                  alt={product.title}
-                />
+              <Link to={`/products/${product.id}`}>
+                <div className={styles.imageWrap}>
+                  <img
+                    src={`http://localhost:3333${product.image}`}
+                    alt={product.title}
+                  />
 
-                {product.discont_price && (
-                  <span className={styles.discount}>
-                    -{Math.round(
-                      (1 - product.discont_price / product.price) * 100
-                    )}%
-                  </span>
-                )}
-              </div>
-            </Link>
+                  {product.discont_price && (
+                    <span className={styles.discount}>
+                      -{Math.round(
+                        (1 - product.discont_price / product.price) * 100
+                      )}%
+                    </span>
+                  )}
+                </div>
+              </Link>
 
-            <Link to={`/products/${product.id}`} className={styles.title}>
-              {product.title}
-            </Link>
-
-            <div className={styles.priceRow}>
-              <div className={styles.prices}>
-                <span className={styles.currentPrice}>
-                  $
-                  {product.discont_price
-                    ? product.discont_price
-                    : product.price}
-                </span>
-
-                {product.discont_price && (
-                  <span className={styles.oldPrice}>
-                    ${product.price}
-                  </span>
-                )}
-              </div>
-
-              <button
-                className={styles.addButton}
-                onClick={() => handleAddToCart(product)}
+              <Link
+                to={`/products/${product.id}`}
+                className={styles.title}
               >
-                Add to cart
-              </button>
-            </div>
+                {product.title}
+              </Link>
 
-          </div>
-        ))}
-      </div>
+              <div className={styles.priceRow}>
+                <div className={styles.prices}>
+                  <span className={styles.currentPrice}>
+                    $
+                    {product.discont_price
+                      ? product.discont_price
+                      : product.price}
+                  </span>
+
+                  {product.discont_price && (
+                    <span className={styles.oldPrice}>
+                      ${product.price}
+                    </span>
+                  )}
+                </div>
+
+                <button
+                  className={styles.addButton}
+                  onClick={() => dispatch(addToCart(product))}
+                >
+                  Add to cart
+                </button>
+              </div>
+
+            </div>
+          ))}
+        </div>
+      )}
 
     </div>
   )

@@ -1,254 +1,166 @@
-/* ===== PAGE ===== */
 .cartPage {
   max-width: 1440px;
   margin: 0 auto;
   padding: 40px;
 }
 
-/* ===== BREADCRUMBS ===== */
+/* BREADCRUMBS */
 .breadcrumbs {
   font-size: 14px;
   color: #8b8b8b;
-  margin-bottom: 32px;
-}
-
-.breadcrumbs a {
-  color: #8b8b8b;
-  text-decoration: none;
-}
-
-.breadcrumbs a:hover {
-  color: #000;
-}
-
-/* ===== EMPTY CART ===== */
-.emptyCart {
-  margin-top: 80px;
-}
-
-.emptyCart h1 {
-  font-size: 48px;
-  font-weight: 700;
   margin-bottom: 24px;
 }
 
-.emptyCart p {
-  font-size: 20px;
-  color: #8b8b8b;
-  margin-bottom: 40px;
-}
-
-.continueButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 240px;
-  height: 58px;
-  background-color: #4d55ff;
-  color: #fff;
-  border-radius: 8px;
+.breadcrumbs a {
+  color: #0d50ff;
   text-decoration: none;
-  font-size: 18px;
-  font-weight: 500;
 }
 
-.continueButton:hover {
-  background-color: #000;
-}
-
-/* ===== HEADER ===== */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* TITLE */
+.cartPage h1 {
+  font-size: 48px;
   margin-bottom: 40px;
 }
 
-.header h1 {
-  font-size: 48px;
-  font-weight: 700;
-}
-
-.clearButton {
-  background: none;
-  border: none;
-  color: #8b8b8b;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.clearButton:hover {
-  color: #000;
-}
-
-/* ===== LAYOUT ===== */
-.cartContainer {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 32px;
-  align-items: flex-start;
-}
-
-/* ===== ITEMS LIST ===== */
-.itemsList {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-/* ===== CART ITEM ===== */
-.cartItem {
-  display: flex;
-  gap: 24px;
-  padding: 24px;
-  border: 1px solid #dddddd;
-  border-radius: 12px;
-}
-
-.cartItem img {
-  width: 140px;
-  height: 140px;
-  object-fit: contain;
-}
-
-/* ===== ITEM INFO ===== */
-.itemInfo {
-  flex: 1;
+/* EMPTY */
+.empty {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.itemInfo h3 {
-  font-size: 20px;
-  font-weight: 600;
+.empty a {
+  color: #0d50ff;
+  text-decoration: none;
 }
 
-/* ===== CONTROLS ===== */
-.itemControls {
+/* CONTENT */
+.cartContent {
   display: flex;
-  align-items: center;
-  gap: 24px;
+  gap: 40px;
 }
 
-/* quantity */
-.quantityControl {
+/* ITEMS */
+.items {
+  flex: 2;
   display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cartItem {
+  display: grid;
+  grid-template-columns: 120px 1fr auto auto;
+  gap: 20px;
   align-items: center;
-  border: 1px solid #dddddd;
-  border-radius: 8px;
-  overflow: hidden;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
 }
 
-.quantityControl button {
-  width: 40px;
-  height: 40px;
-  border: none;
-  background: #fff;
-  font-size: 20px;
-  cursor: pointer;
+.cartItem img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
 }
 
-.quantityControl span {
-  width: 40px;
-  text-align: center;
-  font-size: 16px;
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* price */
-.priceBlock {
+.info a {
+  text-decoration: none;
+  color: #282828;
+  font-weight: 500;
+}
+
+/* QUANTITY */
+.quantity {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.currentPrice {
+.quantity button {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+}
+
+/* PRICE */
+.price {
   font-size: 20px;
   font-weight: 700;
 }
 
-.oldPrice {
-  font-size: 16px;
-  color: #8b8b8b;
-  text-decoration: line-through;
-}
-
-/* remove */
-.removeButton {
-  margin-left: auto;
+/* REMOVE */
+.remove {
   background: none;
   border: none;
   font-size: 20px;
   cursor: pointer;
-  color: #8b8b8b;
 }
 
-.removeButton:hover {
-  color: #000;
-}
-
-/* ===== ORDER SUMMARY ===== */
-.orderSummary {
-  border: 1px solid #dddddd;
+/* ORDER */
+.order {
+  flex: 1;
+  border: 1px solid #ddd;
   border-radius: 12px;
-  padding: 32px;
+  padding: 24px;
+  height: fit-content;
 }
 
-.orderSummary h2 {
+.order h2 {
   font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.total {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.total span {
   font-weight: 700;
-  margin-bottom: 24px;
 }
 
-.summaryRow,
-.totalRow {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 16px;
-  font-size: 18px;
-}
-
-.totalRow {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 32px;
-}
-
-/* ===== ORDER FORM ===== */
-.orderForm {
+.order form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.orderForm input {
-  height: 58px;
+.order input {
+  height: 50px;
   border-radius: 8px;
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
   padding: 0 16px;
-  font-size: 16px;
 }
 
-.orderButton {
-  height: 58px;
+.order button {
+  height: 56px;
   border-radius: 8px;
+  background: #0d50ff;
+  color: white;
   border: none;
-  background-color: #4d55ff;
-  color: #fff;
   font-size: 18px;
-  font-weight: 600;
   cursor: pointer;
 }
 
-.orderButton:hover {
-  background-color: #000;
+.order button:hover {
+  background: #000;
 }
 
-/* ===== MODAL ===== */
+/* MODAL */
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -256,31 +168,49 @@
 }
 
 .modal {
-  background: #fff;
-  border-radius: 12px;
-  padding: 40px;
-  max-width: 520px;
-  text-align: center;
-  position: relative;
+ width: 548;
+height: 236;
+background-color: blue;
+color: white;
+opacity: 1;
+top: 316px;
+left: 446px;
+gap: 16px;
+border-radius: radius big;
+padding: 32px;
+
 }
 
 .modal h2 {
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 16px;
+  width: 424px;
+height: 172px;
+opacity: 1;
+gap: 24px;
+font-size: 46px;
 }
 
 .modal p {
-  font-size: 18px;
-  color: #555;
+  font-family: Montserrat;
+font-weight: 600px;
+font-style: SemiBold;
+font-size: 20px;
+line-height: 110.00000000000001%;
+letter-spacing: 0%;
+
 }
 
 .close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  border: none;
+
   background: none;
-  font-size: 20px;
+  border: none;
+  color: white;
+  font-size: 26px;
   cursor: pointer;
+}
+
+/* ADAPTIVE */
+@media (max-width: 900px) {
+  .cartContent {
+    flex-direction: column;
+  }
 }

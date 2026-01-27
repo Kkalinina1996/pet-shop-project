@@ -1,66 +1,79 @@
-.notFoundPage {
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
+.wrapper {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.content {
-    text-align: center;
-    max-width: 600px;
+/* CARD */
+.card {
+  width: 690px;
+  padding: 48px;
+  background: white;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
 }
 
-.imageContainer {
-    margin-bottom: 40px;
+/* 4 🐶 4 */
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 24px;
 }
 
-.image404 {
-    width: 100%;
-    max-width: 450px;
-    height: auto;
+
+
+.image {
+  width: 690.7950439453125;
+height: 270;
+opacity: 1;
+gap: 16px;
+
 }
 
-.notFoundPage h1 {
-    font-size: 64px;
-    margin-bottom: 20px;
-    color: #333;
+/* TEXT */
+.card h2 {
+  font-size: 32px;
+  margin-bottom: 16px;
 }
 
-.notFoundPage p {
-    font-size: 20px;
-    color: #666;
-    margin-bottom: 40px;
-    line-height: 1.6;
+.card p {
+  font-size: 18px;
+  color: #8b8b8b;
+  line-height: 1.4;
+  margin-bottom: 32px;
 }
 
-.homeButton {
-    display: inline-block;
-    padding: 15px 50px;
-    background-color: #0066ff;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: 600;
-    transition: background-color 0.3s, transform 0.3s;
+/* BUTTON */
+.button {
+  display: inline-block;
+  padding: 16px 32px;
+  background: #0d50ff;
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-size: 18px;
 }
 
-.homeButton:hover {
-    background-color: #0052cc;
-    transform: translateY(-2px);
+.button:hover {
+  background: #000;
 }
 
+/* ADAPTIVE */
 @media (max-width: 768px) {
-    .notFoundPage h1 {
-        font-size: 48px;
-    }
+  .card {
+    width: 90%;
+    padding: 32px;
+  }
 
-    .notFoundPage p {
-        font-size: 18px;
-    }
+  .number {
+    font-size: 80px;
+  }
 
-    .image404 {
-        max-width: 300px;
-    }
+  .image {
+    width: 80px;
+  }
 }
