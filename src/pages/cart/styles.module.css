@@ -1,277 +1,254 @@
+/* ===== PAGE ===== */
 .cartPage {
-    max-width: 1200px;
-    margin: 0 auto;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 40px;
 }
 
+/* ===== BREADCRUMBS ===== */
 .breadcrumbs {
-    margin-bottom: 20px;
-    color: #666;
+  font-size: 14px;
+  color: #8b8b8b;
+  margin-bottom: 32px;
 }
 
 .breadcrumbs a {
-    color: #0066ff;
-    text-decoration: none;
+  color: #8b8b8b;
+  text-decoration: none;
 }
 
 .breadcrumbs a:hover {
-    text-decoration: underline;
+  color: #000;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-}
-
-.header h1 {
-    font-size: 48px;
-    margin: 0;
-}
-
-.clearButton {
-    padding: 10px 20px;
-    background-color: transparent;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s;
-}
-
-.clearButton:hover {
-    background-color: #f5f5f5;
-}
-
-.cartContainer {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 40px;
-}
-
-/* Товары */
-.itemsList {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.cartItem {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    border: 1px solid #eee;
-    border-radius: 12px;
-}
-
-.cartItem img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.itemInfo {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.itemInfo h3 {
-    font-size: 20px;
-    margin: 0;
-}
-
-.itemControls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.quantityControl {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 5px;
-}
-
-.quantityControl button {
-    width: 35px;
-    height: 35px;
-    border: none;
-    background-color: #f5f5f5;
-    border-radius: 6px;
-    font-size: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.quantityControl button:hover {
-    background-color: #e0e0e0;
-}
-
-.quantityControl span {
-    font-size: 20px;
-    font-weight: bold;
-    min-width: 30px;
-    text-align: center;
-}
-
-.priceBlock {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-.currentPrice {
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.oldPrice {
-    font-size: 20px;
-    color: #999;
-    text-decoration: line-through;
-}
-
-.removeButton {
-    width: 40px;
-    height: 40px;
-    border: none;
-    background-color: #f5f5f5;
-    border-radius: 6px;
-    font-size: 24px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.removeButton:hover {
-    background-color: #ffebee;
-    color: #f44336;
-}
-
-/* Итог заказа */
-.orderSummary {
-    background-color: #f5f5f5;
-    padding: 30px;
-    border-radius: 12px;
-    height: fit-content;
-}
-
-.orderSummary h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-.summaryRow {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    font-size: 18px;
-}
-
-.totalRow {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 15px;
-    margin-top: 15px;
-    border-top: 1px solid #ddd;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.orderForm {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 30px;
-}
-
-.orderForm input {
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-}
-
-.orderButton {
-    padding: 15px;
-    background-color: #0066ff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.orderButton:hover {
-    background-color: #0052cc;
-}
-
-/* Пустая корзина */
+/* ===== EMPTY CART ===== */
 .emptyCart {
-    text-align: center;
-    margin-top: 100px;
+  margin-top: 80px;
 }
 
 .emptyCart h1 {
-    font-size: 48px;
-    margin-bottom: 20px;
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 24px;
 }
 
 .emptyCart p {
-    font-size: 20px;
-    color: #666;
-    margin-bottom: 30px;
+  font-size: 20px;
+  color: #8b8b8b;
+  margin-bottom: 40px;
 }
 
 .continueButton {
-    display: inline-block;
-    padding: 15px 40px;
-    background-color: #0066ff;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: 600;
-    transition: background-color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 240px;
+  height: 58px;
+  background-color: #4d55ff;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .continueButton:hover {
-    background-color: #0052cc;
+  background-color: #000;
 }
 
-@media (max-width: 768px) {
-    .cartContainer {
-        grid-template-columns: 1fr;
-    }
+/* ===== HEADER ===== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
 
-    .cartItem {
-        flex-direction: column;
-    }
+.header h1 {
+  font-size: 48px;
+  font-weight: 700;
+}
 
-    .cartItem img {
-        width: 100%;
-        height: 200px;
-    }
+.clearButton {
+  background: none;
+  border: none;
+  color: #8b8b8b;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-    .itemControls {
-        flex-wrap: wrap;
-        gap: 15px;
-    }
+.clearButton:hover {
+  color: #000;
+}
+
+/* ===== LAYOUT ===== */
+.cartContainer {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+/* ===== ITEMS LIST ===== */
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ===== CART ITEM ===== */
+.cartItem {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+}
+
+.cartItem img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+}
+
+/* ===== ITEM INFO ===== */
+.itemInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.itemInfo h3 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* ===== CONTROLS ===== */
+.itemControls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* quantity */
+.quantityControl {
+  display: flex;
+  align-items: center;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.quantityControl button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.quantityControl span {
+  width: 40px;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* price */
+.priceBlock {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.currentPrice {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.oldPrice {
+  font-size: 16px;
+  color: #8b8b8b;
+  text-decoration: line-through;
+}
+
+/* remove */
+.removeButton {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #8b8b8b;
+}
+
+.removeButton:hover {
+  color: #000;
+}
+
+/* ===== ORDER SUMMARY ===== */
+.orderSummary {
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+  padding: 32px;
+}
+
+.orderSummary h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.summaryRow,
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.totalRow {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+/* ===== ORDER FORM ===== */
+.orderForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.orderForm input {
+  height: 58px;
+  border-radius: 8px;
+  border: 1px solid #dddddd;
+  padding: 0 16px;
+  font-size: 16px;
+}
+
+.orderButton {
+  height: 58px;
+  border-radius: 8px;
+  border: none;
+  background-color: #4d55ff;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.orderButton:hover {
+  background-color: #000;
 }
 
 /* ===== MODAL ===== */
-
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -279,32 +256,31 @@
 }
 
 .modal {
-  width: 424px;
-  background: #0d50ff;
-  color: #ffffff;
+  background: #fff;
   border-radius: 12px;
-  padding: 24px;
+  padding: 40px;
+  max-width: 520px;
+  text-align: center;
   position: relative;
 }
 
 .modal h2 {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 12px;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 16px;
 }
 
 .modal p {
-  font-size: 16px;
-  line-height: 1.4;
+  font-size: 18px;
+  color: #555;
 }
 
 .close {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: none;
+  top: 16px;
+  right: 16px;
   border: none;
-  color: #ffffff;
+  background: none;
   font-size: 20px;
   cursor: pointer;
 }

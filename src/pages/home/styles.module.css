@@ -1,206 +1,229 @@
-.mainPage {
-    max-width: 1200px;
-    margin: 0 auto;
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
 }
 
-
-.banner {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 12px;
-    padding: 60px 40px;
-    margin-bottom: 60px;
-    color: white;
-    width: 100%;
-    max-width: 1440px;
-    height: 600px;
-    display: flex;
-    align-items: center;
+/* HERO */
+.hero {
+  min-height: 600px;
+  background: url('/images/hero.jpg') center / cover no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.bannerContent {
-    max-width: 600px;
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
 }
 
-.bannerContent h1 {
-    font-size: 48px;
-    margin-bottom: 30px;
+.heroContent {
+  position: relative;
+  padding: 0 40px;
+  max-width: 700px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
-.bannerButton {
-    display: inline-block;
-    background-color: white;
-    color: #667eea;
-    padding: 15px 40px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: transform 0.3s;
+.heroContent h1 {
+  font-family: Montserrat;
+font-weight: 700;
+font-style: Bold;
+font-size: 64px;
+
+line-height: 110.00000000000001%;
+letter-spacing: 0%;
+text-align: center;
+
 }
 
-.bannerButton:hover {
-    transform: scale(1.05);
+.heroBtn {
+  width: fit-content;
+  padding: 16px 32px;
+  background: #0d50ff;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 18px;
 }
 
-
+/* SECTION */
 .section {
-    margin-bottom: 60px;
+  padding: 0 40px;
 }
 
 .sectionHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
 }
 
 .sectionHeader h2 {
-    font-size: 32px;
+  font-size: 40px;
 }
 
-.seeAll {
-    color: #0066ff;
-    text-decoration: none;
-    font-size: 18px;
+.sectionHeader a {
+  color: #0d50ff;
+  text-decoration: none;
 }
 
-.seeAll:hover {
-    text-decoration: underline;
-}
-
-
+/* CATEGORIES */
 .categoriesGrid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
 }
 
 .categoryCard {
-    text-decoration: none;
-    color: #333;
-    border: 1px solid #eee;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.categoryCard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-decoration: none;
+  color: #282828;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .categoryCard img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
+  width: 100%;
+  aspect-ratio: 316 / 392;
+  object-fit: cover;
+  border-radius: 12px;
 }
 
-.categoryCard h3 {
-    padding: 15px;
-    text-align: center;
-    font-size: 18px;
+.categoryCard p {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* DISCOUNT */
+.discount {
+  background: #0d50ff;
+  padding: 70px 70px;
+}
+
+.discountContent {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.discountText {
+  font-family: Montserrat;
+font-weight: 700;
+font-style: Bold;
+font-size: 64px;
+color: aliceblue;
+line-height: 110.00000000000001%;
+letter-spacing: 0%;
+text-align: center;
+
+}
+
+.discountText img {
+  width: 783px;
+height: 360px;
+
+opacity: 1;
+
 }
 
 
-.discountBanner {
-    background: linear-gradient(135deg, #0066ff 0%, #00c6ff 100%);
-    border-radius: 12px;
-    padding: 40px;
-    color: white;
-    text-align: center;
-    margin-bottom: 60px;
-}
-
-.discountBanner h2 {
-    font-size: 36px;
-    margin-bottom: 30px;
+.discountText h2 {
+  font-size: 48px;
+  margin-bottom: 20px;
 }
 
 .discountForm {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
 }
 
 .discountForm input {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    width: 200px;
+width: 516;
+height: 58;
+opacity: 1;
+gap: 10px;
+border-radius: radius small;
+padding-top: 16px;
+padding-right: 32px;
+padding-bottom: 16px;
+padding-left: 32px;
+border-width: 1px;
+
+
 }
 
 .discountForm button {
-    padding: 12px 30px;
-    background-color: white;
-    color: #0066ff;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.3s;
+width: 516;
+height: 58;
+background-color: white;
+opacity: 1;
+gap: 10px;
+border-radius: radius small;
+padding-top: 16px;
+padding-right: 32px;
+padding-bottom: 16px;
+padding-left: 32px;
+
+
 }
 
-.discountForm button:hover {
-    transform: scale(1.05);
+/* SALE */
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
 }
 
-/* Товары со скидкой на главной */
-.saleTag {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #0066ff;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 14px;
+.productCard {
+  text-decoration: none;
+  color: #282828;
 }
 
-.categoryCard {
-    position: relative;
+.productImage {
+  position: relative;
 }
 
-.salePrices {
-    display: flex;
-    gap: 10px;
-    padding: 0 15px 15px 15px;
-    align-items: center;
+.productImage img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+.discountBadge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: #0d50ff;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.prices {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
 .newPrice {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 .oldPrice {
-    font-size: 18px;
-    color: #999;
-    text-decoration: line-through;
+  font-size: 18px;
+  color: #8b8b8b;
+  text-decoration: line-through;
 }
-
-
-/*@media (max-width: 768px) {*/
-/*    .categoriesGrid {*/
-/*        grid-template-columns: repeat(2, 1fr);*/
-/*    }*/
-
-/*    .bannerContent h1 {*/
-/*        font-size: 32px;*/
-/*    }*/
-
-/*    .discountForm {*/
-/*        flex-direction: column;*/
-/*        align-items: center;*/
-/*    }*/
-
-/*    .discountForm input {*/
-/*        width: 100%;*/
-/*        max-width: 300px;*/
-/*    }*/
-/*}*/

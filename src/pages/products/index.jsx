@@ -1,189 +1,158 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import { addToCart } from '../../redux/slices/cartSlice'
 import styles from './styles.module.css'
 
-function ProductsPage() {
-    const dispatch = useDispatch()
+function Products() {
+  const dispatch = useDispatch()
 
-    const [products, setProducts] = useState([])
-    const [priceFrom, setPriceFrom] = useState('')
-    const [priceTo, setPriceTo] = useState('')
-    const [sortBy, setSortBy] = useState('default')
-    const [showDiscounted, setShowDiscounted] = useState(false)
+  const [products, setProducts] = useState([])
+  const [sort, setSort] = useState('default')
+  const [onlyDiscounted, setOnlyDiscounted] = useState(false)
+  const [priceFrom, setPriceFrom] = useState('')
+  const [priceTo, setPriceTo] = useState('')
 
-    // 🔹 Загружаем ВСЕ товары
-    useEffect(() => {
-        axios
-            .get('http://localhost:3333/products/all')
-            .then(response => {
-                setProducts(response.data)
-            })
-            .catch(error => {
-                console.log('Ошибка:', error)
-            })
-    }, [])
+  useEffect(() => {
+    axios
+      .get('http://localhost:3333/products/all')
+      .then(res => setProducts(res.data))
+      .catch(err => console.log(err))
+  }, [])
 
-    // 🔹 Фильтрация и сортировка (без useEffect ❌)
-    const filteredProducts = useMemo(() => {
-        return products
-            .filter(p => !showDiscounted || p.discont_price)
-            .filter(
-                p =>
-                    !priceFrom ||
-                    (p.discont_price || p.price) >= Number(priceFrom)
-            )
-            .filter(
-                p =>
-                    !priceTo ||
-                    (p.discont_price || p.price) <= Number(priceTo)
-            )
-            .sort((a, b) => {
-                const priceA = a.discont_price || a.price
-                const priceB = b.discont_price || b.price
+  const filteredProducts = products
+    .filter(p => {
+      if (onlyDiscounted && !p.discont_price) return false
 
-                if (sortBy === 'price-asc') return priceA - priceB
-                if (sortBy === 'price-desc') return priceB - priceA
-                if (sortBy === 'title')
-                    return a.title.localeCompare(b.title)
-                return 0
-            })
-    }, [products, priceFrom, priceTo, sortBy, showDiscounted])
+      const price = p.discont_price || p.price
+      if (priceFrom && price < priceFrom) return false
+      if (priceTo && price > priceTo) return false
 
-    const handleAddToCart = product => {
-        dispatch(addToCart(product))
-    }
+      return true
+    })
+    .sort((a, b) => {
+      const priceA = a.discont_price || a.price
+      const priceB = b.discont_price || b.price
 
-    return (
-        <div className={styles.productsPage}>
-            {/* Breadcrumbs */}
-            <div className={styles.breadcrumbs}>
-                <Link to="/">Main page</Link>
-                <span> / </span>
-                <span>All products</span>
-            </div>
+      if (sort === 'price-asc') return priceA - priceB
+      if (sort === 'price-desc') return priceB - priceA
+      if (sort === 'title') return a.title.localeCompare(b.title)
 
-            <h1>All products</h1>
+      return 0
+    })
 
-            {/* Filters */}
-            <div className={styles.filters}>
-                <div className={styles.priceFilter}>
-                    <label>Price</label>
-                    <input
-                        type="number"
-                        placeholder="from"
-                        value={priceFrom}
-                        onChange={e => setPriceFrom(e.target.value)}
-                    />
-                    <input
-                        type="number"
-                        placeholder="to"
-                        value={priceTo}
-                        onChange={e => setPriceTo(e.target.value)}
-                    />
-                </div>
+  return (
+    <div className={styles.productsPage}>
 
-                <div className={styles.discountFilter}>
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={showDiscounted}
-                            onChange={e =>
-                                setShowDiscounted(e.target.checked)
-                            }
-                        />
-                        Discounted items
-                    </label>
-                </div>
+      {/* BREADCRUMBS */}
+      <div className={styles.breadcrumbs}>
+        <Link to="/">Main page</Link>
+        <span> — </span>
+        <span>All products</span>
+      </div>
 
-                <div className={styles.sortFilter}>
-                    <label>Sorted</label>
-                    <select
-                        value={sortBy}
-                        onChange={e => setSortBy(e.target.value)}
-                    >
-                        <option value="default">by default</option>
-                        <option value="title">by title</option>
-                        <option value="price-asc">
-                            by price: low to high
-                        </option>
-                        <option value="price-desc">
-                            by price: high to low
-                        </option>
-                    </select>
-                </div>
-            </div>
+      <h1>All products</h1>
 
-            {/* Products grid */}
-            <div className={styles.productsGrid}>
-                {filteredProducts.map(product => (
-                    <div
-                        key={product.id}
-                        className={styles.productCard}
-                    >
-                        <Link to={`/products/${product.id}`}>
-                            <img
-                                src={`http://localhost:3333${product.image}`}
-                                alt={product.title}
-                            />
-                        </Link>
+      {/* FILTERS */}
+      <div className={styles.filters}>
 
-                        {product.discont_price && (
-                            <div className={styles.discount}>
-                                -
-                                {Math.round(
-                                    (1 -
-                                        product.discont_price /
-                                        product.price) *
-                                    100
-                                )}
-                                %
-                            </div>
-                        )}
-
-                        <div className={styles.productInfo}>
-                            <Link to={`/products/${product.id}`}>
-                                <h3>{product.title}</h3>
-                            </Link>
-
-                            <div className={styles.priceRow}>
-                                <div className={styles.prices}>
-                                    <span className={styles.currentPrice}>
-                                        $
-                                        {product.discont_price ||
-                                            product.price}
-                                    </span>
-
-                                    {product.discont_price && (
-                                        <span className={styles.oldPrice}>
-                                            ${product.price}
-                                        </span>
-                                    )}
-                                </div>
-
-                                <button
-                                    onClick={() =>
-                                        handleAddToCart(product)
-                                    }
-                                    className={styles.addButton}
-                                >
-                                    Add to cart
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            {filteredProducts.length === 0 && (
-                <p className={styles.noProducts}>
-                    No products found
-                </p>
-            )}
+        <div className={styles.priceFilter}>
+          <span>Price</span>
+          <input
+            type="number"
+            placeholder="from"
+            value={priceFrom}
+            onChange={e => setPriceFrom(e.target.value)}
+          />
+          <input
+            type="number"
+            placeholder="to"
+            value={priceTo}
+            onChange={e => setPriceTo(e.target.value)}
+          />
         </div>
-    )
+
+        <label className={styles.checkbox}>
+          <input
+            type="checkbox"
+            checked={onlyDiscounted}
+            onChange={e => setOnlyDiscounted(e.target.checked)}
+          />
+          Discounted items
+        </label>
+
+        <div className={styles.sort}>
+          <span>Sorted</span>
+          <select
+            value={sort}
+            onChange={e => setSort(e.target.value)}
+          >
+            <option value="default">by default</option>
+            <option value="title">by title</option>
+            <option value="price-asc">price: low to high</option>
+            <option value="price-desc">price: high to low</option>
+          </select>
+        </div>
+
+      </div>
+
+      {/* GRID */}
+      <div className={styles.productsGrid}>
+        {filteredProducts.map(product => (
+          <div key={product.id} className={styles.productCard}>
+
+            <Link to={`/products/${product.id}`}>
+              <div className={styles.imageWrap}>
+                <img
+                  src={`http://localhost:3333${product.image}`}
+                  alt={product.title}
+                />
+
+                {product.discont_price && (
+                  <span className={styles.discount}>
+                    -{Math.round(
+                      (1 - product.discont_price / product.price) * 100
+                    )}%
+                  </span>
+                )}
+              </div>
+            </Link>
+
+            <Link to={`/products/${product.id}`} className={styles.title}>
+              {product.title}
+            </Link>
+
+            <div className={styles.priceRow}>
+              <div className={styles.prices}>
+                <span className={styles.currentPrice}>
+                  $
+                  {product.discont_price
+                    ? product.discont_price
+                    : product.price}
+                </span>
+
+                {product.discont_price && (
+                  <span className={styles.oldPrice}>
+                    ${product.price}
+                  </span>
+                )}
+              </div>
+
+              <button
+                className={styles.addButton}
+                onClick={() => dispatch(addToCart(product))}
+              >
+                Add to cart
+              </button>
+            </div>
+
+          </div>
+        ))}
+      </div>
+
+    </div>
+  )
 }
 
-export default ProductsPage
+export default Products

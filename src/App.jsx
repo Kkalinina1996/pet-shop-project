@@ -1,42 +1,34 @@
 import { Routes, Route } from 'react-router-dom'
-
 import Header from './components/header'
-import Footer from './components/footer'
-import CategoriesPage from './pages/categories'
-import CategoryPage from './pages/category'
-import ProductsPage from './pages/products'
-import ProductPage from './pages/product'
-import SalesPage from './pages/sales'
-import CartPage from './pages/cart'
+import Footer from './components/Footer'
 
-import NotFound from './pages/notFound'
-import Hero from './components/hero'
-
+import Home from './pages/home'
+import Categories from './pages/Categories'
+import Category from './pages/Category'
+import Products from './pages/Products'
+import Sale from './pages/sales'
+import Product from './pages/Product'
+import Cart from './pages/Cart'
+import NotFound from './pages/NotFound'
 
 function App() {
   return (
-    <div className="app">
+    <>
       <Header />
 
-      
-        <Routes>
-          
-
-<Route path="/" element={<Hero />} />
-
-          <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/categories/:id" element={<CategoryPage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/products/:id" element={<ProductPage />} />
-          <Route path="/sales" element={<SalesPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-     
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/categories/:id" element={<Category />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/sales" element={<Sale />} />
+        <Route path="/products/:id" element={<Product />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
 
       <Footer />
-    </div>
+    </>
   )
 }
 

@@ -3,137 +3,127 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import styles from './styles.module.css'
 import heroImage from '../../assets/images/heroImage.jpg'
+import discountPets from '../../assets/images/discountPets.png'
 
-const API = 'http://localhost:3333'
 
-function MainPage() {
+
+
+function Home() {
   const [categories, setCategories] = useState([])
-  const [sales, setSales] = useState([])
+  const [saleProducts, setSaleProducts] = useState([])
 
   useEffect(() => {
-    axios
-      .get(`${API}/categories/all`)
-      .then(response => {
-        setCategories(response.data)
-      })
-      .catch(error => {
-        console.log('Ошибка загрузки категорий:', error)
-      })
-  }, [])
+    axios.get('http://localhost:3333/categories/all')
+      .then(res => setCategories(res.data.slice(0, 4)))
 
-  useEffect(() => {
-    axios
-      .get(`${API}/products/all`)
-      .then(response => {
-        const discountedProducts = response.data.filter(
-          p => p.discont_price
-        )
-        setSales(discountedProducts)
-      })
-      .catch(error => {
-        console.log('Ошибка:', error)
+    axios.get('http://localhost:3333/products/all')
+      .then(res => {
+        const discounted = res.data.filter(p => p.discont_price)
+        setSaleProducts(discounted.slice(0, 4))
       })
   }, [])
 
   return (
-    <div className={styles.mainPage}>
-      {/* BANNER */}
-      <div
-        className={styles.banner}
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
-        <div className={styles.bannerContent}>
-          <h1>Amazing Discounts on Pets Products!</h1>
-          <Link to="/sales" className={styles.bannerButton}>
+    <div className={styles.home}>
+
+      {/* HERO */}
+      <section
+  className={styles.hero}
+  style={{ backgroundImage: `url(${heroImage})` }}
+>
+
+        <div className={styles.heroContent}>
+          <h1>Amazing Discounts<br />on Pets Products!</h1>
+          <Link to="/sales" className={styles.heroBtn}>
             Check out
           </Link>
         </div>
-      </div>
+      </section>
 
       {/* CATEGORIES */}
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <h2>Categories</h2>
-          <Link to="/categories" className={styles.seeAll}>
-            All categories
-          </Link>
+          <Link to="/categories">All categories</Link>
         </div>
 
         <div className={styles.categoriesGrid}>
-          {categories.slice(0, 4).map(category => (
+          {categories.map(cat => (
             <Link
-              to={`/categories/${category.id}`}
-              key={category.id}
+              key={cat.id}
+              to={`/categories/${cat.id}`}
               className={styles.categoryCard}
             >
               <img
-                src={`${API}${category.image}`}
-                alt={category.title}
+                src={`http://localhost:3333${cat.image}`}
+                alt={cat.title}
               />
-              <h3>{category.title}</h3>
+              <p>{cat.title}</p>
             </Link>
           ))}
         </div>
       </section>
 
       {/* DISCOUNT FORM */}
-      <div className={styles.discountBanner}>
-        <h2>5% off on the first order</h2>
-        <form className={styles.discountForm}>
-          <input type="text" placeholder="Name" />
-          <input type="tel" placeholder="Phone number" />
-          <input type="email" placeholder="Email" />
-          <button type="submit">Get a discount</button>
-        </form>
-      </div>
+      <section className={styles.discount}>
+        <div className={styles.discountContent}>
+          <div className={styles.discountText}>
+  <h2>5% off on the first order</h2>
+  <img src={discountPets} alt="Pets discount" />
+</div>
+
+          <form className={styles.discountForm}>
+            <input placeholder="Name" />
+            <input placeholder="Phone number" />
+            <input placeholder="Email" />
+            <button>Get a discount</button>
+          </form>
+        </div>
+      </section>
 
       {/* SALE */}
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <h2>Sale</h2>
-          <Link to="/sales" className={styles.seeAll}>
-            All sales
-          </Link>
+          <Link to="/sales">All sales</Link>
         </div>
 
-        <div className={styles.categoriesGrid}>
-          {sales.slice(0, 4).map(sale => (
+        <div className={styles.productsGrid}>
+          {saleProducts.map(product => (
             <Link
-              to={`/products/${sale.id}`}
-              key={sale.id}
-              className={styles.categoryCard}
+              key={product.id}
+              to={`/products/${product.id}`}
+              className={styles.productCard}
             >
-              <img
-                src={`${API}${sale.image}`}
-                alt={sale.title}
-              />
+              <div className={styles.productImage}>
+                <img
+                  src={`http://localhost:3333${product.image}`}
+                  alt={product.title}
+                />
+                <span className={styles.discountBadge}>
+                  -{Math.round(
+                    (1 - product.discont_price / product.price) * 100
+                  )}%
+                </span>
+              </div>
 
-              {sale.discont_price && (
-                <div className={styles.saleTag}>
-                  -
-                  {Math.round(
-                    (1 - sale.discont_price / sale.price) * 100
-                  )}
-                  %
-                </div>
-              )}
+              <h3>{product.title}</h3>
 
-              <h3>{sale.title}</h3>
-
-              <div className={styles.salePrices}>
+              <div className={styles.prices}>
                 <span className={styles.newPrice}>
-                  ${sale.discont_price}
+                  ${product.discont_price}
                 </span>
                 <span className={styles.oldPrice}>
-                  ${sale.price}
+                  ${product.price}
                 </span>
               </div>
             </Link>
           ))}
         </div>
       </section>
+
     </div>
   )
 }
 
-export default MainPage
+export default Home

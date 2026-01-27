@@ -5,7 +5,7 @@ import axios from 'axios'
 import { addToCart } from '../../redux/slices/cartSlice'
 import styles from './styles.module.css'
 
-function ProductPage() {
+function Product() {
   const { id } = useParams()
   const dispatch = useDispatch()
 
@@ -15,16 +15,15 @@ function ProductPage() {
   useEffect(() => {
     axios
       .get(`http://localhost:3333/products/${id}`)
-      .then(response => {
-        const data = response.data
-        setProduct(Array.isArray(data) ? data[0] : data)
-      })
-      .catch(err => console.error(err))
+      .then(res => setProduct(res.data))
+      .catch(err => console.log(err))
   }, [id])
 
   if (!product) {
-    return <p className={styles.loading}>Loading...</p>
+    return <p style={{ padding: 40 }}>Loading...</p>
   }
+
+  const finalPrice = product.discont_price || product.price
 
   const handleAddToCart = () => {
     dispatch(addToCart({ ...product, quantity }))
@@ -32,43 +31,41 @@ function ProductPage() {
 
   return (
     <div className={styles.productPage}>
-      {/* breadcrumbs */}
+
+      {/* BREADCRUMBS */}
       <div className={styles.breadcrumbs}>
         <Link to="/">Main page</Link>
-        <span> / </span>
-        <Link to="/categories">Categories</Link>
-        <span> / </span>
+        <span> — </span>
+        <Link to="/products">All products</Link>
+        <span> — </span>
         <span>{product.title}</span>
       </div>
 
-      <div className={styles.productContainer}>
-        {/* image */}
-        <div className={styles.imageSection}>
+      <div className={styles.productContent}>
+
+        {/* IMAGE */}
+        <div className={styles.imageWrap}>
           <img
             src={`http://localhost:3333${product.image}`}
             alt={product.title}
           />
 
           {product.discont_price && (
-            <div className={styles.discount}>
-              -
-              {Math.round(
-                (1 -
-                  product.discont_price / product.price) *
-                  100
-              )}
-              %
-            </div>
+            <span className={styles.discount}>
+              -{Math.round(
+                (1 - product.discont_price / product.price) * 100
+              )}%
+            </span>
           )}
         </div>
 
-        {/* info */}
-        <div className={styles.infoSection}>
+        {/* INFO */}
+        <div className={styles.info}>
           <h1>{product.title}</h1>
 
-          <div className={styles.priceBlock}>
+          <div className={styles.prices}>
             <span className={styles.currentPrice}>
-              ${product.discont_price || product.price}
+              ${finalPrice}
             </span>
 
             {product.discont_price && (
@@ -78,29 +75,37 @@ function ProductPage() {
             )}
           </div>
 
-          <div className={styles.addToCartBlock}>
-            <div className={styles.quantityControl}>
-              <button onClick={() => setQuantity(q => Math.max(1, q - 1))}>−</button>
-              <span>{quantity}</span>
-              <button onClick={() => setQuantity(q => q + 1)}>+</button>
-            </div>
-
+          {/* QUANTITY */}
+          <div className={styles.quantity}>
             <button
-              className={styles.addButton}
-              onClick={handleAddToCart}
+              onClick={() => setQuantity(q => Math.max(1, q - 1))}
             >
-              Add to cart
+              –
+            </button>
+
+            <span>{quantity}</span>
+
+            <button onClick={() => setQuantity(q => q + 1)}>
+              +
             </button>
           </div>
 
-          <div className={styles.description}>
-            <h3>Description</h3>
-            <p>{product.description}</p>
-          </div>
+          <button
+            className={styles.addButton}
+            onClick={handleAddToCart}
+          >
+            Add to cart
+          </button>
+
+          <p className={styles.description}>
+            {product.description}
+          </p>
         </div>
+
       </div>
+
     </div>
   )
 }
 
-export default ProductPage
+export default Product
