@@ -13,9 +13,13 @@ function Product() {
   const [quantity, setQuantity] = useState(1)
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3333/products/${id}`)
-      .then(res => setProduct(res.data))
+    axios.get('http://localhost:3333/products/all')
+      .then(res => {
+        const foundProduct = res.data.find(
+          item => item.id === Number(id)
+        )
+        setProduct(foundProduct)
+      })
       .catch(err => console.log(err))
   }, [id])
 
@@ -24,10 +28,6 @@ function Product() {
   }
 
   const finalPrice = product.discont_price || product.price
-
-  const handleAddToCart = () => {
-    dispatch(addToCart({ ...product, quantity }))
-  }
 
   return (
     <div className={styles.productPage}>
@@ -92,7 +92,9 @@ function Product() {
 
           <button
             className={styles.addButton}
-            onClick={handleAddToCart}
+            onClick={() =>
+              dispatch(addToCart({ ...product, quantity }))
+            }
           >
             Add to cart
           </button>
