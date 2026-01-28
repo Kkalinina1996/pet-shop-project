@@ -42,8 +42,5 @@ Online pet shop built with React.
 - 404 page
 - Responsive layout
 
-## Installation
-```bash
-npm install
-npm run dev
+
 
