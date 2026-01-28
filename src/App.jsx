@@ -7,7 +7,7 @@ import Categories from './pages/Categories'
 import Category from './pages/Category'
 import Products from './pages/Products'
 import Sale from './pages/sales'
-import Product from './pages/Product'
+import Product from './pages/product'
 import Cart from './pages/Cart'
 import NotFound from './pages/NotFound'
 

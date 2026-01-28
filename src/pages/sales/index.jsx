@@ -42,59 +42,69 @@ function Sale() {
 
       <h1>Discounted items</h1>
 
-      {/* SORT */}
-      <div className={styles.sortFilter}>
-        <span>Sorted</span>
-        <select
-          value={sort}
-          onChange={e => setSort(e.target.value)}
-        >
-          <option value="default">by default</option>
-          <option value="title">by title</option>
-          <option value="price-asc">price: low to high</option>
-          <option value="price-desc">price: high to low</option>
-        </select>
-      </div>
+      {/* FILTERS */}
+<div className={styles.filters}>
+
+  <div className={styles.priceFilter}>
+    <span>Price</span>
+    <input type="number" placeholder="from" />
+    <input type="number" placeholder="to" />
+  </div>
+
+  <div className={styles.sortFilter}>
+    <span>Sorted</span>
+    <select
+      value={sort}
+      onChange={e => setSort(e.target.value)}
+    >
+      <option value="default">by default</option>
+      <option value="title">by title</option>
+      <option value="price-asc">price: low to high</option>
+      <option value="price-desc">price: high to low</option>
+    </select>
+  </div>
+
+</div>
+
 
       {/* GRID */}
       <div className={styles.productsGrid}>
         {sortedProducts.map(product => (
           <div key={product.id} className={styles.productCard}>
 
-            <Link to={`/products/${product.id}`}>
-              <div className={styles.imageWrap}>
+            <div className={styles.imageWrap}>
+              <Link to={`/products/${product.id}`}>
                 <img
                   src={`http://localhost:3333${product.image}`}
                   alt={product.title}
                 />
-                <span className={styles.discount}>
-                  -{Math.round(
-                    (1 - product.discont_price / product.price) * 100
-                  )}%
-                </span>
-              </div>
-            </Link>
+              </Link>
 
-            <Link to={`/products/${product.id}`} className={styles.title}>
-              {product.title}
-            </Link>
-
-            <div className={styles.priceRow}>
-              <div className={styles.prices}>
-                <span className={styles.currentPrice}>
-                  ${product.discont_price}
-                </span>
-                <span className={styles.oldPrice}>
-                  ${product.price}
-                </span>
-              </div>
+              <span className={styles.discount}>
+                -{Math.round(
+                  (1 - product.discont_price / product.price) * 100
+                )}%
+              </span>
 
               <button
                 className={styles.addButton}
-                onClick={() => dispatch(addToCart(product))}
+                onClick={() =>
+                  dispatch(addToCart({ ...product, quantity: 1 }))
+                }
               >
                 Add to cart
               </button>
+            </div>
+
+            <p className={styles.title}>{product.title}</p>
+
+            <div className={styles.prices}>
+              <span className={styles.currentPrice}>
+                ${product.discont_price}
+              </span>
+              <span className={styles.oldPrice}>
+                ${product.price}
+              </span>
             </div>
 
           </div>

@@ -38,7 +38,6 @@ function Products() {
       if (sort === 'price-asc') return priceA - priceB
       if (sort === 'price-desc') return priceB - priceA
       if (sort === 'title') return a.title.localeCompare(b.title)
-
       return 0
     })
 
@@ -82,7 +81,7 @@ function Products() {
           Discounted items
         </label>
 
-        <div className={styles.sort}>
+        <div className={styles.sortFilter}>
           <span>Sorted</span>
           <select
             value={sort}
@@ -102,49 +101,44 @@ function Products() {
         {filteredProducts.map(product => (
           <div key={product.id} className={styles.productCard}>
 
-            <Link to={`/products/${product.id}`}>
-              <div className={styles.imageWrap}>
+            <div className={styles.imageWrap}>
+              <Link to={`/products/${product.id}`}>
                 <img
                   src={`http://localhost:3333${product.image}`}
                   alt={product.title}
                 />
+              </Link>
 
-                {product.discont_price && (
-                  <span className={styles.discount}>
-                    -{Math.round(
-                      (1 - product.discont_price / product.price) * 100
-                    )}%
-                  </span>
-                )}
-              </div>
-            </Link>
-
-            <Link to={`/products/${product.id}`} className={styles.title}>
-              {product.title}
-            </Link>
-
-            <div className={styles.priceRow}>
-              <div className={styles.prices}>
-                <span className={styles.currentPrice}>
-                  $
-                  {product.discont_price
-                    ? product.discont_price
-                    : product.price}
+              {product.discont_price && (
+                <span className={styles.discount}>
+                  -{Math.round(
+                    (1 - product.discont_price / product.price) * 100
+                  )}%
                 </span>
-
-                {product.discont_price && (
-                  <span className={styles.oldPrice}>
-                    ${product.price}
-                  </span>
-                )}
-              </div>
+              )}
 
               <button
                 className={styles.addButton}
-                onClick={() => dispatch(addToCart(product))}
+                onClick={() =>
+                  dispatch(addToCart({ ...product, quantity: 1 }))
+                }
               >
                 Add to cart
               </button>
+            </div>
+
+            <p className={styles.title}>{product.title}</p>
+
+            <div className={styles.prices}>
+              <span className={styles.currentPrice}>
+                ${product.discont_price || product.price}
+              </span>
+
+              {product.discont_price && (
+                <span className={styles.oldPrice}>
+                  ${product.price}
+                </span>
+              )}
             </div>
 
           </div>
